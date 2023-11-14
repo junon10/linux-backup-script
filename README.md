@@ -1,11 +1,20 @@
-Folder Sync Backup Script.
-Script de backup sincronizador de pastas.
+# Info:
 
-Operational System: Linux
-File System: Windows and Linux
-Author: Junon M.
-Date: 2023/11/14
-Version: 1.0.0
-Language: PT-BR
+`Title:` Folder Sync Backup Script.
 
+`Operational System:` Linux
+
+`File System:` Linux and Windows
+
+`Author:` Junon M.
+
+`Version:` 1.0.1
+
+`Date:` 2023/11/14
+
+`Language:` PT-BR
+
+# Description: 
+
+Script de backup para sincronismo de pastas.
 
