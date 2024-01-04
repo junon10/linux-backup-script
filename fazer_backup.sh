@@ -27,6 +27,8 @@ sound_error="paplay ./Sounds/error.ogg"
 
 echo ""
 echo "Espelhamento não criptografado com rsync"
+echo "Date: 2024/01/01 v1.0.0.1"
+echo "Author: Junon M."
 echo ""
 echo "Iniciando backup de:"
 for i in ${!arr_origem[@]}
