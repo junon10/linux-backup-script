@@ -8,13 +8,46 @@
 
 `Author:` Junon M.
 
-`Version:` 1.0.1
+`Version:` 1.0.0.2
 
-`Date:` 2023/11/14
+`Date:` 2024/01/10
 
 `Language:` PT-BR
 
 # Description: 
 
-Script de backup para sincronismo de pastas.
+O script de Espelhamento(Mirroring) roda em qualquer sistema de arquivos, no entanto, o script de backup Incremental funciona apenas em sistemas de arquivos linux, como por exemplo o ext4. 
+
+Após a primeira cópia somente as diferenças são adicionadas com as duas variações de script, garantindo uma alta velocidade de backup.
+
+`Incremental MARK_FOLDER:`
+No backup Incremental deve ser criada manualmente uma pasta (MARK_FOLDER) que será reconhecida pelo script, que neste caso é a pasta de nome 'bkp', mas poderá ser qualquer outro nome à sua escolha, desde que não contenha espaços, como por exemplo:
+TO_PATH_ARR[0]="bkp/FOLDER_NAME"
+
+`Mirroring MARK_FOLDER:`
+No backup por espelhamento a pasta (MARK_FOLDER) está localizada em:
+EXTERNAL_STORAGE[0]="/media/$USER/DISK_NAME1/Mirror"
+Que neste caso tem o nome de Mirror, mas poderá ser qualquer 
+outro nome desde que não contenha espaços.
+
+`NOTE:` Apenas o backup por espelhamento possui script de restauração automática que recria todas as pastas após formatação. No backup incremental as pastas devem ser restauradas manualmente com a data e hora desejadas.
+Não esqueça dos índices que devem ser adicionados aos arrays com os paths de origem(FROM_PATH_ARR), de destino(TO_PATH_ARR), e de unidades externas(EXTERNAL_STORAGE).
+
+Por Exemplo:
+
+Indices de 0 à 2, ou o quanto for necessário.
+           
+FROM_PATH_ARR[0]=
+TO_PATH_ARR[0]=
+
+FROM_PATH_ARR[1]=
+TO_PATH_ARR[1]=
+
+FROM_PATH_ARR[2]=
+TO_PATH_ARR[2]=
+
+EXTERNAL_STORAGE[0]=
+EXTERNAL_STORAGE[1]=
+EXTERNAL_STORAGE[2]=
+
 

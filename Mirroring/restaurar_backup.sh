@@ -26,15 +26,16 @@ sound_error="paplay ./Sounds/error.ogg"
 # ${sound_finished}
 
 echo ""
-echo "Espelhamento não criptografado com rsync"
-echo "Date: 2024/01/01 v1.0.0.1"
-echo "Author: Junon M."
+echo "App:......Espelhamento com rsync (sem criptografia)"
+echo "Date:.....2024/01/10" 
+echo "Version:..1.0.0.2"
+echo "Author:...Junon M."
 echo ""
 echo "Deseja restaurar à partir de qual unidade de disco?"
 echo ""
-for i in ${!external_storage[@]}
+for i in ${!EXTERNAL_STORAGE[@]}
 do
-  echo "${i}. ${external_storage[i]}"
+  echo "${i}. ${EXTERNAL_STORAGE[i]}"
 done
 echo ""
 
@@ -53,7 +54,7 @@ if [ ! $index -ge 0 ]; then
   exit 1
 fi
 
-if [ ! $index -le $[${#external_storage[@]}-1] ]; then  
+if [ ! $index -le $[${#EXTERNAL_STORAGE[@]}-1] ]; then  
   echo "Erro: índice maior que o máximo disponível!"
   echo "Tecle [ENTER] para sair..."
   echo ""
@@ -61,15 +62,15 @@ if [ ! $index -le $[${#external_storage[@]}-1] ]; then
   exit 1
 fi
 
-arr_disk[0]="${external_storage[${index}]}"
+arr_disk[0]="${EXTERNAL_STORAGE[${index}]}"
 echo ""
 echo "Selecionada restauração à partir de:"
   echo "${index}. ${arr_disk[0]}"
 echo ""
 echo "Para:"
-for i in ${!arr_origem[@]}
+for i in ${!FROM_PATH_ARR[@]}
 do
-  echo "${arr_origem[i]}"
+  echo "${FROM_PATH_ARR[i]}"
 done
 echo ""
 echo "Tecle [ENTER] para continuar, ou [CTRL+C] para sair..."
@@ -80,15 +81,15 @@ read
 #-----------------------------------------------------------------------------------------------------
 
 # Data e Hora atual
-date_format=$(date +%Y-%m-%d,%H-%M-%S-%A)
+formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
 
 # Loop for para os diretórios de origem
-for j in ${!arr_origem[@]}
+for j in ${!FROM_PATH_ARR[@]}
 do
-origem="${arr_origem[j]}"
+from_path="${FROM_PATH_ARR[j]}"
 
   # Se a pasta não existir, escreva
-  if [ ! -d ${origem} ]; then 
+  if [ ! -d ${from_path} ]; then 
 
     # Loop for para as unidades externas
     for i in ${!arr_disk[@]}
@@ -96,29 +97,29 @@ origem="${arr_origem[j]}"
       # Verifica se está montado
       if [ -d ${arr_disk[i]} ]; then 
       
-        destino="${arr_disk[i]}/${arr_destino[j]}/"
+        to_path="${arr_disk[i]}/${TO_PATH_ARR[j]}/"
       
         # Diretório onde será salvo o arquivo de log
-        log_dir=~/"Documentos/log"
-        mkdir -p "${log_dir}"
+        log_path=~/"Documentos/log"
+        mkdir -p "${log_path}"
 
         # Nome do arquivo de log
-        log_file="${log_dir}/daily-backup.log"
+        log_file="${log_path}/daily-backup.log"
 
-        printf "Restauração de ${destino}\niniciado em [$date_format]\n" >> $log_file
+        printf "Restauração de ${to_path}\niniciado em [$formated_date]\n" >> $log_file
         echo ""
-        echo "Restauração de ${destino}"
-        echo "iniciado em ${date_format}"
-        echo "para ${origem}"
+        echo "Restauração de ${to_path}"
+        echo "iniciado em ${formated_date}"
+        echo "para ${from_path}"
 
-        if rsync -a --progress --delete ${destino} ${origem}; then
-          date_format=$(date +%Y-%m-%d,%H-%M-%S-%A) 
-          printf "concluída com sucesso em [$date_format]\n\n" >> $log_file
+        if rsync -a --progress --delete ${to_path} ${from_path}; then
+          formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
+          printf "concluída com sucesso em [$formated_date]\n\n" >> $log_file
           echo "Concluída com sucesso!"
           echo ""
         else
-          date_format=$(date +%Y-%m-%d,%H-%M-%S-%A)
-          printf "concluída com erros em [$date_format]\n\n" >> $log_file
+          formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
+          printf "concluída com erros em [$formated_date]\n\n" >> $log_file
           echo "Concluída com erros!"
           echo ""
           ${sound_error} 
@@ -131,7 +132,7 @@ origem="${arr_origem[j]}"
 
   else 
     # Se a pasta já existir mostre uma msg 
-    echo "Erro: A pasta ${origem} já existe!"
+    echo "Erro: A pasta ${from_path} já existe!"
     echo "Primeiro exclua a pasta que você quiser restaurar"
     echo "Por segurança é proibido sobrescrever dados!"
     echo ""

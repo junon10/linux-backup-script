@@ -26,20 +26,21 @@ sound_error="paplay ./Sounds/error.ogg"
 # ${sound_finished}
 
 echo ""
-echo "Espelhamento não criptografado com rsync"
-echo "Date: 2024/01/01 v1.0.0.1"
-echo "Author: Junon M."
+echo "App:......Espelhamento com rsync (sem criptografia)"
+echo "Date:.....2024/01/10" 
+echo "Version:..1.0.0.2"
+echo "Author:...Junon M."
 echo ""
 echo "Iniciando backup de:"
-for i in ${!arr_origem[@]}
+for i in ${!FROM_PATH_ARR[@]}
 do
-  echo "${arr_origem[i]}"
+  echo "${FROM_PATH_ARR[i]}"
 done
 echo ""
 echo "Para:"
-for i in ${!external_storage[@]}
+for i in ${!EXTERNAL_STORAGE[@]}
 do
-  echo "${external_storage[i]}"
+  echo "${EXTERNAL_STORAGE[i]}"
 done
 echo ""
 echo "Tecle [ENTER] para continuar, ou [CTRL+C] para sair..."
@@ -49,49 +50,49 @@ read
 #-----------------------------------------------------------------------------------------------------
 
 # Data e Hora atual
-date_format=$(date +%Y-%m-%d,%H-%M-%S-%A)
+formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
 
 # Loop for para os diretórios de origem
-for j in ${!arr_origem[@]}
+for j in ${!FROM_PATH_ARR[@]}
 do
-origem="${arr_origem[j]}/"
+from_path="${FROM_PATH_ARR[j]}/"
 
   # Loop for para as unidades externas
-  for i in ${!external_storage[@]}
+  for i in ${!EXTERNAL_STORAGE[@]}
   do
     # Verifica se está montado
-    if [ -d ${external_storage[i]} ]; then 
+    if [ -d ${EXTERNAL_STORAGE[i]} ]; then 
       
-      destino="${external_storage[i]}/${arr_destino[j]}"
-      mkdir -p ${destino}      
+      to_path="${EXTERNAL_STORAGE[i]}/${TO_PATH_ARR[j]}"
+      mkdir -p ${to_path}      
     
       # Diretório onde será salvo o arquivo de log
-      log_dir="${external_storage[i]}/log"
-      mkdir -p "${log_dir}"
+      log_path="${EXTERNAL_STORAGE[i]}/log"
+      mkdir -p "${log_path}"
 
       # Nome do arquivo de log
-      log_file="${log_dir}/daily-backup.log"
+      log_file="${log_path}/daily-backup.log"
 
-      printf "Backup de ${origem}\niniciado em [$date_format]\n" >> $log_file
+      printf "Backup de ${from_path}\niniciado em [$formated_date]\n" >> $log_file
       echo ""
-      echo "Backup de ${origem}" 
-      echo "iniciado em ${date_format}"
-      echo "para ${destino}"
+      echo "Backup de ${from_path}" 
+      echo "iniciado em ${formated_date}"
+      echo "para ${to_path}"
 
-      if rsync -a --progress --delete ${origem} ${destino}; then
-        date_format=$(date +%Y-%m-%d,%H-%M-%S-%A) 
-        printf "concluído com sucesso em [$date_format]\n\n" >> $log_file
+      if rsync -a --progress --delete ${from_path} ${to_path}; then
+        formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
+        printf "concluído com sucesso em [$formated_date]\n\n" >> $log_file
         echo "Concluído com sucesso!"
         echo ""
       else
-        date_format=$(date +%Y-%m-%d,%H-%M-%S-%A)
-        printf "concluído com erros em [$date_format]\n\n" >> $log_file
+        formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
+        printf "concluído com erros em [$formated_date]\n\n" >> $log_file
         echo "Concluído com erros!"
         echo ""
         ${sound_error} 
       fi
     else
-      echo "Erro: Unidade de disco ${external_storage[i]} não montada!"
+      echo "Erro: Unidade de disco ${EXTERNAL_STORAGE[i]} não montada!"
       echo ""
     fi
   done
