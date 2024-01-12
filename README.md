@@ -33,21 +33,4 @@ outro nome desde que não contenha espaços.
 `NOTE:` Apenas o backup por espelhamento possui script de restauração automática que recria todas as pastas após formatação. No backup incremental as pastas devem ser restauradas manualmente com a data e hora desejadas.
 Não esqueça dos índices que devem ser adicionados aos arrays com os paths de origem(FROM_PATH_ARR), de destino(TO_PATH_ARR), e de unidades externas(EXTERNAL_STORAGE).
 
-Por Exemplo:
-
-Indices de 0 à 2, ou o quanto for necessário.
-           
-``FROM_PATH_ARR[0]=
-``TO_PATH_ARR[0]=
-
-``FROM_PATH_ARR[1]=
-``TO_PATH_ARR[1]=
-
-``FROM_PATH_ARR[2]=
-``TO_PATH_ARR[2]=
-
-``EXTERNAL_STORAGE[0]=
-``EXTERNAL_STORAGE[1]=
-``EXTERNAL_STORAGE[2]=
-
 
