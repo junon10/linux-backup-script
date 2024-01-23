@@ -27,8 +27,8 @@ sound_error="paplay ./Sounds/error.ogg"
 
 echo ""
 echo "App:......Espelhamento com rsync (sem criptografia)"
-echo "Date:.....2024/01/10" 
-echo "Version:..1.0.0.2"
+echo "Date:.....2024/01/23" 
+echo "Version:..1.0.0.3"
 echo "Author:...Junon M."
 echo ""
 echo "Deseja restaurar à partir de qual unidade de disco?"
@@ -106,34 +106,45 @@ from_path="${FROM_PATH_ARR[j]}"
         # Nome do arquivo de log
         log_file="${log_path}/daily-backup.log"
 
-        printf "Restauração de ${to_path}\niniciado em [$formated_date]\n" >> $log_file
-        echo ""
-        echo "Restauração de ${to_path}"
-        echo "iniciado em ${formated_date}"
-        echo "para ${from_path}"
+        # Nome do arquivo de log detalhado
+        log_path_details="${log_path}/${TO_PATH_ARR[j]}"
+        mkdir -p "${log_path_details}"
 
-        if rsync -a --progress --delete ${to_path} ${from_path}; then
+        log_file_details="${log_path_details}/${formated_date}-details.log"
+
+        echo "Arquivos de log serão gravados em '${log_path}'"
+        echo ""
+
+        printf "Restauração de '${to_path}'\niniciado em [$formated_date]\n" >> $log_file
+        echo ""
+        echo "Restauração de '${to_path}'"
+        echo "iniciado em ${formated_date}"
+        echo "para '${from_path}'"
+
+        if rsync -a --progress --delete ${to_path} ${from_path} | tee ${log_file_details}; then
           formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
           printf "concluída com sucesso em [$formated_date]\n\n" >> $log_file
           echo "Concluída com sucesso!"
+          echo "Concluída com sucesso!" >> ${log_file_details}
           echo ""
         else
           formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
           printf "concluída com erros em [$formated_date]\n\n" >> $log_file
           echo "Concluída com erros!"
+          echo "Concluída com erros!" >> ${log_file_details}
           echo ""
           ${sound_error} 
         fi
       else
-        echo "Erro: Unidade de disco ${arr_disk[i]} não montada!"
+        echo "Erro: Unidade de disco '${arr_disk[i]}' não montada!"
         echo ""
       fi
     done
 
   else 
     # Se a pasta já existir mostre uma msg 
-    echo "Erro: A pasta ${from_path} já existe!"
-    echo "Primeiro exclua a pasta que você quiser restaurar"
+    echo "Erro: A pasta '${from_path}' já existe!"
+    echo "Primeiro exclua a pasta que você quiser restaurar."
     echo "Por segurança é proibido sobrescrever dados!"
     echo ""
   fi
