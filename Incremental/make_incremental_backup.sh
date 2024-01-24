@@ -4,11 +4,11 @@ CONFIG_FILE=./inc_backup_path.inc
 
 if [ ! -f ${CONFIG_FILE} ]
 then
-  echo "Erro: O arquivo de configuração:" 
+  echo "Error: The configuration file:" 
   echo "'${CONFIG_FILE}'"
-  echo "não foi encontrado!"
+  echo "was not found!"
   echo ""
-  echo "Tecle [ENTER] para sair..."
+  echo "Press [ENTER] to exit..."
   read
   exit
 fi
@@ -26,24 +26,24 @@ sound_error="paplay ./Sounds/error.ogg"
 # ${sound_finished}
 
 echo ""
-echo "App:......Backup Incremental rápido com rsync (sem criptografia)"
+echo "App:......Fast Incremental Backup with rsync (no encryption)"
 echo "Date:.....2024/01/23" 
-echo "Version:..1.0.0.3"
+echo "Version:..1.0.0.4"
 echo "Author:...Junon M."
 echo ""
-echo "Iniciando backup de:"
+echo "Starting backup from:"
 for i in ${!FROM_PATH_ARR[@]}
 do
   echo "${FROM_PATH_ARR[i]}"
 done
 echo ""
-echo "Para:"
+echo "To:"
 for i in ${!EXTERNAL_STORAGE[@]}
 do
   echo "${EXTERNAL_STORAGE[i]}"
 done
 echo ""
-echo "Tecle [ENTER] para continuar, ou [CTRL+C] para sair..."
+echo "Press [ENTER] to continue, or [CTRL+C] to exit..."
 echo ""
 read
 
@@ -81,24 +81,24 @@ from_path="${FROM_PATH_ARR[j]}/"
       latest_link="${EXTERNAL_STORAGE[i]}/${TO_PATH_ARR[j]}/latest"
 
       echo ""
-      echo "Fazendo backup em ${to_full_path}..."
+      echo "Backing up to ${to_full_path}..."
 
       if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee ${log_file_details}; then
         
         rm -rf "${latest_link}"
         ln -s "${to_full_path}" "${latest_link}"
         
-        printf "[$formated_date] BACKUP SUCCESS.\n" >> $log_file
+        printf "[$formated_date] backup success.\n" >> $log_file
         echo "" >> ${log_file_details}        
-        echo "BACKUP SUCCESS" >> ${log_file_details}
-        echo "Backup concluído com sucesso em ${to_full_path}"
+        echo "backup success." >> ${log_file_details}
+        echo "backup success to ${to_full_path}"
       else
         printf "[$formated_date] BACKUP COPY ERROR.\n" >> $log_file
         echo "" >> ${log_file_details}        
-        echo "BACKUP COPY ERROR" >> ${log_file_details}
-        echo "Erro ao copiar para ${to_full_path}"
+        echo "BACKUP COPY ERROR." >> ${log_file_details}
+        echo "BACKUP COPY ERROR TO ${to_full_path}"
         echo ""
-        echo "Pressione [ENTER] para sair"
+        echo "Press [ENTER] to exit..."
         echo ""
         read
         ${sound_error}
@@ -109,7 +109,7 @@ from_path="${FROM_PATH_ARR[j]}/"
 done
 
 echo ""
-echo "Tecle [ENTER] para sair..."
+echo "Press [ENTER] to exit..."
 echo ""
 ${sound_finished}
 read

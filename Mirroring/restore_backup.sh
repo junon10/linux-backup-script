@@ -4,11 +4,11 @@ CONFIG_FILE=./backup_path.inc
 
 if [ ! -f ${CONFIG_FILE} ]
 then
-  echo "Erro: O arquivo de configuração:" 
+  echo "Error: The configuration file:" 
   echo "'${CONFIG_FILE}'"
-  echo "não foi encontrado!"
+  echo "was not found!"
   echo ""
-  echo "Tecle [ENTER] para sair..."
+  echo "Press [ENTER] to exit..."
   read
   exit
 fi
@@ -26,12 +26,12 @@ sound_error="paplay ./Sounds/error.ogg"
 # ${sound_finished}
 
 echo ""
-echo "App:......Espelhamento com rsync (sem criptografia)"
+echo "App:......Mirroring with rsync (without encryption)"
 echo "Date:.....2024/01/23" 
-echo "Version:..1.0.0.3"
+echo "Version:..1.0.0.4"
 echo "Author:...Junon M."
 echo ""
-echo "Deseja restaurar à partir de qual unidade de disco?"
+echo "Where do you want to restore from?"
 echo ""
 for i in ${!EXTERNAL_STORAGE[@]}
 do
@@ -42,21 +42,21 @@ echo ""
 index=
 until grep -E '^[0-9]+$' <<< $index
 do
-read -p "Informe o número de índice correspondente: " index
+read -p "Enter the corresponding index number: " index
 done
 echo ""
 
 if [ ! $index -ge 0 ]; then  
-  echo "Erro: índice menor que zero!"
-  echo "Tecle [ENTER] para sair..."
+  echo "Error: index less than zero!"
+  echo "Press [ENTER] to exit..."
   echo ""
   read
   exit 1
 fi
 
 if [ ! $index -le $[${#EXTERNAL_STORAGE[@]}-1] ]; then  
-  echo "Erro: índice maior que o máximo disponível!"
-  echo "Tecle [ENTER] para sair..."
+  echo "Error: index greater than the maximum available!"
+  echo "Press [ENTER] to exit..."
   echo ""
   read
   exit 1
@@ -64,16 +64,16 @@ fi
 
 arr_disk[0]="${EXTERNAL_STORAGE[${index}]}"
 echo ""
-echo "Selecionada restauração à partir de:"
+echo "Selected restoration from:"
   echo "${index}. ${arr_disk[0]}"
 echo ""
-echo "Para:"
+echo "To:"
 for i in ${!FROM_PATH_ARR[@]}
 do
   echo "${FROM_PATH_ARR[i]}"
 done
 echo ""
-echo "Tecle [ENTER] para continuar, ou [CTRL+C] para sair..."
+echo "Press [ENTER] to continue, or [CTRL+C] to exit..."
 echo ""
 read
 
@@ -112,47 +112,47 @@ from_path="${FROM_PATH_ARR[j]}"
 
         log_file_details="${log_path_details}/${formated_date}-details.log"
 
-        echo "Arquivos de log serão gravados em '${log_path}'"
+        echo "Log files will be written to '${log_path}'"
         echo ""
 
-        printf "Restauração de '${to_path}'\niniciado em [$formated_date]\n" >> $log_file
+        printf "Restore from '${to_path}'\nstarted on [$formated_date]\n" >> $log_file
         echo ""
-        echo "Restauração de '${to_path}'"
-        echo "iniciado em ${formated_date}"
-        echo "para '${from_path}'"
+        echo "Restore from '${to_path}'"
+        echo "started on ${formated_date}"
+        echo "to '${from_path}'"
 
         if rsync -a --progress --delete ${to_path} ${from_path} | tee ${log_file_details}; then
           formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
-          printf "concluída com sucesso em [$formated_date]\n\n" >> $log_file
-          echo "Concluída com sucesso!"
-          echo "Concluída com sucesso!" >> ${log_file_details}
+          printf "successfully completed on [$formated_date]\n\n" >> $log_file
+          echo "successfully completed!"
+          echo "successfully completed!" >> ${log_file_details}
           echo ""
         else
           formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
-          printf "concluída com erros em [$formated_date]\n\n" >> $log_file
-          echo "Concluída com erros!"
-          echo "Concluída com erros!" >> ${log_file_details}
+          printf "RESTALL ERROR ON [$formated_date]\n\n" >> $log_file
+          echo "RESTALL ERROR!"
+          echo "RESTALL ERROR!" >> ${log_file_details}
           echo ""
           ${sound_error} 
         fi
       else
-        echo "Erro: Unidade de disco '${arr_disk[i]}' não montada!"
+        echo "ERROR: DISK UNIT '${arr_disk[i]}' NOT MOUNTED!"
         echo ""
       fi
     done
 
   else 
     # Se a pasta já existir mostre uma msg 
-    echo "Erro: A pasta '${from_path}' já existe!"
-    echo "Primeiro exclua a pasta que você quiser restaurar."
-    echo "Por segurança é proibido sobrescrever dados!"
+    echo "ERROR: FOLDER '${from_path}' ALREADY EXISTS!"
+    echo "FIRST DELETE THE FOLDER YOU WANT TO RESTORE."
+    echo "FOR SECURITY, OVERWRITING DATA IS PROHIBITED!"
     echo ""
   fi
 
 done
 
 echo ""
-echo "Tecle [ENTER] para sair..."
+echo "Press [ENTER] to exit..."
 echo ""
 ${sound_finished}
 read
