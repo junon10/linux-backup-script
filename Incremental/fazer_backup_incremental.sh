@@ -27,8 +27,8 @@ sound_error="paplay ./Sounds/error.ogg"
 
 echo ""
 echo "App:......Backup Incremental rápido com rsync (sem criptografia)"
-echo "Date:.....2024/01/10" 
-echo "Version:..1.0.0.2"
+echo "Date:.....2024/01/23" 
+echo "Version:..1.0.0.3"
 echo "Author:...Junon M."
 echo ""
 echo "Iniciando backup de:"
@@ -76,20 +76,26 @@ from_path="${FROM_PATH_ARR[j]}/"
       # Nome do arquivo de log
       log_file="${log_path}/daily-backup.log"
 
+      log_file_details="${log_path}/${formated_date}-details.log"
+
       latest_link="${EXTERNAL_STORAGE[i]}/${TO_PATH_ARR[j]}/latest"
 
       echo ""
       echo "Fazendo backup em ${to_full_path}..."
 
-      if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}"; then
+      if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee ${log_file_details}; then
         
         rm -rf "${latest_link}"
         ln -s "${to_full_path}" "${latest_link}"
         
         printf "[$formated_date] BACKUP SUCCESS.\n" >> $log_file
+        echo "" >> ${log_file_details}        
+        echo "BACKUP SUCCESS" >> ${log_file_details}
         echo "Backup concluído com sucesso em ${to_full_path}"
       else
         printf "[$formated_date] BACKUP COPY ERROR.\n" >> $log_file
+        echo "" >> ${log_file_details}        
+        echo "BACKUP COPY ERROR" >> ${log_file_details}
         echo "Erro ao copiar para ${to_full_path}"
         echo ""
         echo "Pressione [ENTER] para sair"
