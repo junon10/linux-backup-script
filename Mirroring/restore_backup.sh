@@ -100,7 +100,7 @@ from_path="${FROM_PATH_ARR[j]}"
         to_path="${arr_disk[i]}/${TO_PATH_ARR[j]}/"
       
         # Diretório onde será salvo o arquivo de log
-        log_path=~/"Documentos/log"
+        log_path=~/"Backup-logs"
         mkdir -p "${log_path}"
 
         # Nome do arquivo de log
