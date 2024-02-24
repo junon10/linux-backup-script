@@ -7,28 +7,36 @@
 ## Version: 1.0.0.3
 ## Date: 2024/02/24
 
+<br/><br/>
 # Description: 
-<br/>
+<br/><br/>
+
 The Mirroring script runs on any file system, however, the Incremental backup script only works on Linux file systems, such as ext4. After the first copy only the differences are added with the two script variations, ensuring a high backup speed. Both script variations generate very detailed logs on the target drive.
-<br/>
+
+<br/><br/>
 # NOTE:
-<br/> 
+<br/><br/>
+ 
 Only mirror backup has an automatic restore script that recreates all folders after formatting. In incremental backup, folders must be restored manually with the desired date and time.
 <br/>
 These Scripts have been tested for a long time, sometimes restoration was necessary and there was no loss of files.
 <br/>
 Be careful with invalid file names, they make the backup fail!
-<br/>
+<br/><br/>
+
 ---------------------------------------------------
-<br/>
+
+<br/><br/>
 Backup_path.inc example file:
-<br/>
+<br/><br/>
+
 # FROM_PATH_ARR[n] Backup source directory (without slash at the end)
 <br/>
 # TO_PATH_ARR[n] Backup destination directories (without slash at the beginning and end)
 <br/>
 # EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
-<br/>
+<br/><br/>
+
 FROM_PATH_ARR[0]="/home/$USER/Documentos/Contas"
 <br/>
 TO_PATH_ARR[0]="Contas"
@@ -44,17 +52,21 @@ TO_PATH_ARR[2]="Games"
 EXTERNAL_STORAGE[0]="/media/$USER/HD_WD_4TB/Mirror"
 <br/>
 EXTERNAL_STORAGE[1]="/media/$USER/SAM_1TB_2/Mirror"
-<br/>
+<br/><br/>
+
 ---------------------------------------------------
-<br/>
+
+<br/><br/>
 inc_backup_path.inc example file:
-<br/>
+<br/><br/>
+
 # FROM_PATH_ARR[n] Backup source directory (without slash at the end)
 <br/>
 # TO_PATH_ARR[n] Backup destination directories (without slash at the end, and without white spaces)
 <br/>
 # EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
-<br/>
+<br/><br/>
+
 FROM_PATH_ARR[0]="/media/$USER/KINGSTON_1TB/Docs/Develop"
 <br/>
 TO_PATH_ARR[0]="bkp/Develop"
