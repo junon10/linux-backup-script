@@ -21,13 +21,15 @@ These Scripts have been tested for a long time, sometimes restoration was necess
 <br/>
 Be careful with invalid file names, they make the backup fail!
 <br/>
-#---------------------------------------------------
+---------------------------------------------------
 <br/>
-# Backup_path.inc example file:
+## Backup_path.inc example file:
 <br/>
-### FROM_PATH_ARR[n] Backup source directory (without slash at the end)
-### TO_PATH_ARR[n] Backup destination directories (without slash at the beginning and end)
-### EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
+## FROM_PATH_ARR[n] Backup source directory (without slash at the end)
+<br/>
+## TO_PATH_ARR[n] Backup destination directories (without slash at the beginning and end)
+<br/>
+## EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
 <br/>
 FROM_PATH_ARR[0]="/home/$USER/Documentos/Contas"
 <br/>
@@ -45,15 +47,17 @@ EXTERNAL_STORAGE[0]="/media/$USER/HD_WD_4TB/Mirror"
 <br/>
 EXTERNAL_STORAGE[1]="/media/$USER/SAM_1TB_2/Mirror"
 <br/>
-#---------------------------------------------------
+---------------------------------------------------
 <br/>
 # inc_backup_path.inc example file:
 <br/>
-### Incremental Backup
+## Incremental Backup
 <br/>
-### FROM_PATH_ARR[n] Backup source directory (without slash at the end)
-### TO_PATH_ARR[n] Backup destination directories (without slash at the end, and without white spaces)
-### EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
+## FROM_PATH_ARR[n] Backup source directory (without slash at the end)
+<br/>
+## TO_PATH_ARR[n] Backup destination directories (without slash at the end, and without white spaces)
+<br/>
+## EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
 <br/>
 FROM_PATH_ARR[0]="/media/$USER/KINGSTON_1TB/Docs/Develop"
 <br/>
@@ -73,6 +77,6 @@ TO_PATH_ARR[3]="bkp/STM32CubeIDE"
 <br/><br/>
 EXTERNAL_STORAGE[0]="/media/$USER/Sam128GB"
 <br/>
-#---------------------------------------------------
+---------------------------------------------------
 
 
