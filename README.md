@@ -1,20 +1,18 @@
 # Info:
 
 ## Folder Sync Backup Script
-
 ## Operational System: Linux
-
 ## File System: Linux and Windows
-
 ## Author: Junon M
-
 ## Version: 1.0.0.3
-
 ## Date: 2024/02/24
 
 # Description: 
+<br/>
 The Mirroring script runs on any file system, however, the Incremental backup script only works on Linux file systems, such as ext4. After the first copy only the differences are added with the two script variations, ensuring a high backup speed. Both script variations generate very detailed logs on the target drive.
-## NOTE: 
+<br/>
+# NOTE:
+<br/> 
 Only mirror backup has an automatic restore script that recreates all folders after formatting. In incremental backup, folders must be restored manually with the desired date and time.
 <br/>
 These Scripts have been tested for a long time, sometimes restoration was necessary and there was no loss of files.
@@ -23,13 +21,13 @@ Be careful with invalid file names, they make the backup fail!
 <br/>
 ---------------------------------------------------
 <br/>
-## Backup_path.inc example file:
+Backup_path.inc example file:
 <br/>
-## FROM_PATH_ARR[n] Backup source directory (without slash at the end)
+# FROM_PATH_ARR[n] Backup source directory (without slash at the end)
 <br/>
-## TO_PATH_ARR[n] Backup destination directories (without slash at the beginning and end)
+# TO_PATH_ARR[n] Backup destination directories (without slash at the beginning and end)
 <br/>
-## EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
+# EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
 <br/>
 FROM_PATH_ARR[0]="/home/$USER/Documentos/Contas"
 <br/>
@@ -49,15 +47,13 @@ EXTERNAL_STORAGE[1]="/media/$USER/SAM_1TB_2/Mirror"
 <br/>
 ---------------------------------------------------
 <br/>
-# inc_backup_path.inc example file:
+inc_backup_path.inc example file:
 <br/>
-## Incremental Backup
+# FROM_PATH_ARR[n] Backup source directory (without slash at the end)
 <br/>
-## FROM_PATH_ARR[n] Backup source directory (without slash at the end)
+# TO_PATH_ARR[n] Backup destination directories (without slash at the end, and without white spaces)
 <br/>
-## TO_PATH_ARR[n] Backup destination directories (without slash at the end, and without white spaces)
-<br/>
-## EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
+# EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
 <br/>
 FROM_PATH_ARR[0]="/media/$USER/KINGSTON_1TB/Docs/Develop"
 <br/>
