@@ -1,53 +1,71 @@
 # Info:
 
-`Title:` Folder Sync Backup Script.
+## Folder Sync Backup Script
 
-`Operational System:` Linux
+## Operational System: Linux
 
-`File System:` Linux and Windows
+## File System: Linux and Windows
 
-`Author:` Junon M.
+## Author: Junon M
 
-`Version:` 1.0.0.2
+## Version: 1.0.0.3
 
-`Date:` 2024/01/10
-
-`Language:` PT-BR
+## Date: 2024/02/24
 
 # Description: 
 
-O script de Espelhamento(Mirroring) roda em qualquer sistema de arquivos, no entanto, o script de backup Incremental funciona apenas em sistemas de arquivos linux, como por exemplo o ext4. 
+The Mirroring script runs on any file system, however, the Incremental backup script only works on Linux file systems, such as ext4. After the first copy only the differences are added with the two script variations, ensuring a high backup speed. Both script variations generate very detailed logs on the target drive.
 
-Após a primeira cópia somente as diferenças são adicionadas com as duas variações de script, garantindo uma alta velocidade de backup.
+## NOTE: 
 
-`Incremental MARK_FOLDER:`
-No backup Incremental deve ser criada manualmente uma pasta (MARK_FOLDER) que será reconhecida pelo script, que neste caso é a pasta de nome 'bkp', mas poderá ser qualquer outro nome à sua escolha, desde que não contenha espaços, como por exemplo:
-TO_PATH_ARR[0]="bkp/FOLDER_NAME"
+Only mirror backup has an automatic restore script that recreates all folders after formatting. In incremental backup, folders must be restored manually with the desired date and time.
+<br/>
+These Scripts have been tested for a long time, sometimes restoration was necessary and there was no loss of files.
+<br/>
+Be careful with invalid file names, they make the backup fail!
+<br/>
+# Backup_path.inc example file:
 
-`Mirroring MARK_FOLDER:`
-No backup por espelhamento a pasta (MARK_FOLDER) está localizada em:
-EXTERNAL_STORAGE[0]="/media/$USER/DISK_NAME1/Mirror"
-Que neste caso tem o nome de Mirror, mas poderá ser qualquer 
-outro nome desde que não contenha espaços.
+### FROM_PATH_ARR[n] Backup source directory (without slash at the end)
+### TO_PATH_ARR[n] Backup destination directories (without slash at the beginning and end)
+### EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
 
-`NOTE:` Apenas o backup por espelhamento possui script de restauração automática que recria todas as pastas após formatação. No backup incremental as pastas devem ser restauradas manualmente com a data e hora desejadas.
-Não esqueça dos índices que devem ser adicionados aos arrays com os paths de origem(FROM_PATH_ARR), de destino(TO_PATH_ARR), e de unidades externas(EXTERNAL_STORAGE).
-<br/><br/>
-Por Exemplo:
-<br/><br/>
-Indices de 0 à 2, ou o quanto for necessário.
-<br/><br/>
-FROM_PATH_ARR[0]=<br/>
-TO_PATH_ARR[0]=<br/>
-<br/><br/>
-FROM_PATH_ARR[1]=<br/>
-TO_PATH_ARR[1]=<br/>
-<br/><br/>
-FROM_PATH_ARR[2]=<br/>
-TO_PATH_ARR[2]=<br/>
-<br/><br/>
-EXTERNAL_STORAGE[0]=<br/>
-EXTERNAL_STORAGE[1]=<br/>
-EXTERNAL_STORAGE[2]=<br/>
+FROM_PATH_ARR[0]="/home/$USER/Documentos/Contas"
+TO_PATH_ARR[0]="Contas"
+<br/>
+FROM_PATH_ARR[1]="/media/$USER/KINGSTON_1TB/Docs"
+TO_PATH_ARR[1]="Docs"
+<br/>
+FROM_PATH_ARR[2]="/media/$USER/KINGSTON_1TB/Games/Salvos"
+TO_PATH_ARR[2]="Games"
+<br/>
+EXTERNAL_STORAGE[0]="/media/$USER/HD_WD_4TB/Mirror"
+EXTERNAL_STORAGE[1]="/media/$USER/SAM_1TB_2/Mirror"
+
+#---------------------------------------------------
+
+# inc_backup_path.inc example file:
+
+### Incremental Backup
+
+### FROM_PATH_ARR[n] Backup source directory (without slash at the end)
+### TO_PATH_ARR[n] Backup destination directories (without slash at the end, and without white spaces)
+### EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
+
+FROM_PATH_ARR[0]="/media/$USER/KINGSTON_1TB/Docs/Develop"
+TO_PATH_ARR[0]="bkp/Develop"
+<br/>
+FROM_PATH_ARR[1]="/media/$USER/KINGSTON_1TB/Docs/AndroidStudioProjects"
+TO_PATH_ARR[1]="bkp/AndroidStudioProjects"
+<br/>
+FROM_PATH_ARR[2]="/media/$USER/KINGSTON_1TB/Instalados/ESP-IDF/Projects"
+TO_PATH_ARR[2]="bkp/ESP-IDF"
+<br/>
+FROM_PATH_ARR[3]="/media/$USER/KINGSTON_1TB/Instalados/STM32CubeIDE"
+TO_PATH_ARR[3]="bkp/STM32CubeIDE"
+<br/>
+EXTERNAL_STORAGE[0]="/media/$USER/Sam128GB"
+
+#---------------------------------------------------
 
 
