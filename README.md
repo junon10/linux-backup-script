@@ -1,9 +1,9 @@
-## Linux Backup Script
-## Operational System: Linux
-## File System: Linux and Windows
-## Author: Junon M
-## Version: 1.0.0.3
-## Date: 2024/02/24
+<h2>Linux Backup Script</h2>
+<h3>Operational System:</h3> Linux
+<h3>File System:</h3> Linux and Windows
+<h3>Author:</h3> Junon M
+<h3>Version:</h3> 1.0.0.3
+<h3>Date:</h3> 2024/02/24
 
 <h2>Description:</h2> 
 <p>The Mirroring script runs on any file system, however, the Incremental backup script only works on Linux file systems, such as ext4. After the first copy only the differences are added with the two script variations, ensuring a high backup speed. Both script variations generate very detailed logs on the target drive.</p>
