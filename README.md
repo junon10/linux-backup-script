@@ -1,4 +1,4 @@
-## Folder Sync Backup Script
+## Linux Backup Script
 ## Operational System: Linux
 ## File System: Linux and Windows
 ## Author: Junon M
