@@ -14,7 +14,7 @@
 
 <hr>
 
-<h2>Mirror Example file:</h2> 
+<h3>Mirror Backup Example file:</h3> 
 <h3>backup_path.inc</h3> 
 <br/>
 # FROM_PATH_ARR[n] Backup source directory (without slash at the end)
@@ -41,7 +41,7 @@ EXTERNAL_STORAGE[1]="/media/$USER/SAM_1TB_2/Mirror"
 
 <hr>
 
-<h2> Incremental backup example file: </h2> 
+<h3> Incremental Backup Example File: </h3> 
 <h3>inc_backup_path.inc</h3>
 <br/>
 # FROM_PATH_ARR[n] Backup source directory (without slash at the end)
