@@ -15,7 +15,7 @@
 <hr>
 
 <h2>Mirror Example file:</h2> 
-<h3>Backup_path.inc</h3> 
+<h3>backup_path.inc</h3> 
 <br/>
 # FROM_PATH_ARR[n] Backup source directory (without slash at the end)
 <br/>
