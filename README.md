@@ -5,9 +5,9 @@
 <h3>Version:</h3> 1.0.0.3
 <h3>Date:</h3> 2024/02/24
 
-<h2>Description:</h2> 
+<h3>Description:</h3> 
 <p>The Mirroring script runs on any file system, however, the Incremental backup script only works on Linux file systems, such as ext4. After the first copy only the differences are added with the two script variations, ensuring a high backup speed. Both script variations generate very detailed logs on the target drive.</p>
-<h2>NOTES:</h2>
+<h3>NOTES:</h3>
 <p>Only mirror backup has an automatic restore script that recreates all folders after formatting. In incremental backup, folders must be restored manually with the desired date and time.</p>
 <p>These Scripts have been tested for a long time, sometimes restoration was necessary and there was no loss of files.</p>
 <p>Be careful with invalid file names, they make the backup fail!</p>
