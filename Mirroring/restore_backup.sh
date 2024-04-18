@@ -27,8 +27,8 @@ sound_error="paplay ./Sounds/error.ogg"
 
 echo ""
 echo "App:......Mirroring with rsync (without encryption)"
-echo "Date:.....2024/01/23" 
-echo "Version:..1.0.0.4"
+echo "Date:.....2024/04/18" 
+echo "Version:..1.0.0.6"
 echo "Author:...Junon M."
 echo ""
 echo "Where do you want to restore from?"
@@ -73,7 +73,7 @@ do
   echo "${FROM_PATH_ARR[i]}"
 done
 echo ""
-echo "Press [ENTER] to continue, or [CTRL+C] to exit..."
+echo "Press [ENTER] to confirm, or [CTRL+C] to exit..."
 echo ""
 read
 
@@ -89,7 +89,15 @@ do
 from_path="${FROM_PATH_ARR[j]}"
 
   # Se a pasta não existir, escreva
-  if [ ! -d ${from_path} ]; then 
+  if [ -d ${from_path} ]; then 
+    # Se a pasta já existir mostre uma msg 
+    echo "ERROR: Folder '${from_path}' already exists!"    
+    read -p "Press [W] to overwrite, or [ENTER] to Skip: " opt
+  else
+    opt="w"
+  fi
+
+    if [ "$opt" = "w" ] || [ "$opt" = "W" ]; then
 
     # Loop for para as unidades externas
     for i in ${!arr_disk[@]}
@@ -121,7 +129,7 @@ from_path="${FROM_PATH_ARR[j]}"
         echo "started on ${formated_date}"
         echo "to '${from_path}'"
 
-        if rsync -a --progress --delete ${to_path} ${from_path} | tee ${log_file_details}; then
+        if rsync -a --progress ${to_path} ${from_path} | tee ${log_file_details}; then
           formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
           printf "successfully completed on [$formated_date]\n\n" >> $log_file
           echo "successfully completed!"
@@ -140,13 +148,6 @@ from_path="${FROM_PATH_ARR[j]}"
         echo ""
       fi
     done
-
-  else 
-    # Se a pasta já existir mostre uma msg 
-    echo "ERROR: FOLDER '${from_path}' ALREADY EXISTS!"
-    echo "FIRST DELETE THE FOLDER YOU WANT TO RESTORE."
-    echo "FOR SECURITY, OVERWRITING DATA IS PROHIBITED!"
-    echo ""
   fi
 
 done
