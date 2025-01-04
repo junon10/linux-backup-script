@@ -1,0 +1,7 @@
+# Example:
+
+FROM_PATH+=("/home/$USER/Desktop")
+FROM_PATH+=("/home/$USER/Documents")
+
+TO_PATH+=("/media/$USER/Disc_name1/Folder_name")
+TO_PATH+=("/media/$USER/Disc_name2/Folder_name")

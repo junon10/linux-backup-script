@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIG_FILE=./backup_path.inc
+CONFIG_FILE=./backup_path.txt
 
 if [ ! -f ${CONFIG_FILE} ]
 then
@@ -15,6 +15,16 @@ fi
 
 source ${CONFIG_FILE}
 
+app_version="v1.0.0.8"
+app_date="2025/01/04"
+app_author="Junon M."
+
+app_title() {
+echo "--------------------------------------------------------------------------------"
+echo "                         Linux Restore ${app_version}"
+echo "--------------------------------------------------------------------------------"
+}
+
 # Beep com alto-falante da placa mãe
 # beep="echo -e \"\a\""
 
@@ -25,17 +35,18 @@ sound_error="paplay ./Sounds/error.ogg"
 # Ex: Para tocar o som use:
 # ${sound_finished}
 
-echo ""
-echo "App:......Mirroring with rsync (without encryption)"
-echo "Date:.....2024/04/18" 
-echo "Version:..1.0.0.6"
-echo "Author:...Junon M."
+clear
+echo "$(app_title)"
+echo "Date: ${app_date} ${app_version}"
+echo "Author: ${app_author}"
+echo "--------------------------------------------------------------------------------"
 echo ""
 echo "Where do you want to restore from?"
 echo ""
-for i in ${!EXTERNAL_STORAGE[@]}
+for i in ${!TO_PATH[@]}
 do
-  echo "${i}. ${EXTERNAL_STORAGE[i]}"
+  # Exibe o caminho sem a barra final
+  echo "${i}. ${TO_PATH[i]%/}"
 done
 echo ""
 
@@ -54,7 +65,7 @@ if [ ! $index -ge 0 ]; then
   exit 1
 fi
 
-if [ ! $index -le $[${#EXTERNAL_STORAGE[@]}-1] ]; then  
+if [ ! $index -le $[${#TO_PATH[@]}-1] ]; then  
   echo "Error: index greater than the maximum available!"
   echo "Press [ENTER] to exit..."
   echo ""
@@ -62,18 +73,24 @@ if [ ! $index -le $[${#EXTERNAL_STORAGE[@]}-1] ]; then
   exit 1
 fi
 
-arr_disk[0]="${EXTERNAL_STORAGE[${index}]}"
+clear
+echo "$(app_title)"
+
+# Copia removendo qualquer barra do final
+arr_disk[0]="${TO_PATH[${index}]%/}"
+
 echo ""
 echo "Selected restoration from:"
   echo "${index}. ${arr_disk[0]}"
 echo ""
 echo "To:"
-for i in ${!FROM_PATH_ARR[@]}
+for i in ${!FROM_PATH[@]}
 do
-  echo "${FROM_PATH_ARR[i]}"
+  # Exibe removendo qualquer barra do final
+  echo "${FROM_PATH[i]%/}"
 done
 echo ""
-echo "Press [ENTER] to confirm, or [CTRL+C] to exit..."
+echo "Press [ENTER] to restore now, or [CTRL+C] to exit..."
 echo ""
 read
 
@@ -84,9 +101,14 @@ read
 formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
 
 # Loop for para os diretórios de origem
-for j in ${!FROM_PATH_ARR[@]}
+for j in ${!FROM_PATH[@]}
 do
-from_path="${FROM_PATH_ARR[j]}"
+
+# Se tiver barra remova
+from_path="${FROM_PATH[j]%/}"
+
+# Obtém o nome da última subpasta
+last_subfolder="${from_path##*/}"
 
   # Se a pasta não existir, escreva
   if [ -d ${from_path} ]; then 
@@ -105,7 +127,7 @@ from_path="${FROM_PATH_ARR[j]}"
       # Verifica se está montado
       if [ -d ${arr_disk[i]} ]; then 
       
-        to_path="${arr_disk[i]}/${TO_PATH_ARR[j]}/"
+        to_path="${arr_disk[i]}/${last_subfolder}/"
       
         # Diretório onde será salvo o arquivo de log
         log_path=~/"Backup-logs"
@@ -115,7 +137,7 @@ from_path="${FROM_PATH_ARR[j]}"
         log_file="${log_path}/daily-backup.log"
 
         # Nome do arquivo de log detalhado
-        log_path_details="${log_path}/${TO_PATH_ARR[j]}"
+        log_path_details="${log_path}/${last_subfolder}"
         mkdir -p "${log_path_details}"
 
         log_file_details="${log_path_details}/${formated_date}-details.log"
