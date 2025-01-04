@@ -15,29 +15,18 @@
 <hr>
 
 <h3>Mirror Backup Example file:</h3> 
-<h3>backup_path.inc</h3> 
+<h3>backup_path.txt</h3> 
 <br/>
-# FROM_PATH_ARR[n] Backup source directory (without slash at the end)
-<br/>
-# TO_PATH_ARR[n] Backup destination directories (without slash at the beginning and end)
-<br/>
-# EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
+# Example:
 <br/><br/>
-FROM_PATH_ARR[0]="/home/$USER/Documentos/Contas"
+FROM_PATH+=("/home/$USER/Desktop")
 <br/>
-TO_PATH_ARR[0]="Contas"
+FROM_PATH+=("/home/$USER/Documents")
 <br/><br/>
-FROM_PATH_ARR[1]="/media/$USER/KINGSTON_1TB/Docs"
+TO_PATH+=("/media/$USER/Disc_name1/Folder_name")
 <br/>
-TO_PATH_ARR[1]="Docs"
+TO_PATH+=("/media/$USER/Disc_name2/Folder_name")
 <br/><br/>
-FROM_PATH_ARR[2]="/media/$USER/KINGSTON_1TB/Games/Salvos"
-<br/>
-TO_PATH_ARR[2]="Games"
-<br/><br/>
-EXTERNAL_STORAGE[0]="/media/$USER/HD_WD_4TB/Mirror"
-<br/>
-EXTERNAL_STORAGE[1]="/media/$USER/SAM_1TB_2/Mirror"
 
 <hr>
 
