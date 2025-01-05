@@ -2,11 +2,12 @@
 
 <h2>Descrição</h2>
 
-<p>Script de backup para Linux, com opções de backup espelhado (mirror) e incremental. Desenvolvido por Junon M.</p>
+<p>Script de backup para Linux, com opções de backup espelhado (mirror) e incremental.<br>
+Desenvolvido por Junon M.</p>
 
 <h2>Requisitos</h2>
 
-<p>- Sistema operacional: Linux
+<p>- Sistema operacional: Linux<br>
 - File system: ext4 (para backup incremental)</p>
 
 <h2>Instalação</h2>
@@ -71,4 +72,3 @@ DAY_LIMIT=7</p>
 <h2>Contribuição</h2>
 
 <p>Contribuições são bem-vindas! Envie um pull request com suas melhorias</p>
-<hr>
