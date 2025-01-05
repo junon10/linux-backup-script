@@ -1,57 +1,74 @@
 <h2>Linux Backup Script</h2>
-<h3>Operational System:</h3> Linux
-<h3>File System:</h3> Linux and Windows
-<h3>Author:</h3> Junon M
-<h3>Version:</h3> 1.0.0.9
-<h3>Date:</h3> 2025/01/05
 
-<h3>Description:</h3> 
-<p>The Mirroring script runs on any file system, however, the Incremental backup script only works on Linux file systems, such as ext4. After the first copy only the differences are added with the two script variations, ensuring a high backup speed. Both script variations generate very detailed logs on the target drive.</p>
-<h3>NOTES:</h3>
-<p>Only mirror backup has an automatic restore script that recreates all folders after formatting. In incremental backup, folders must be restored manually with the desired date and time.</p>
-<p>These Scripts have been tested for a long time, sometimes restoration was necessary and there was no loss of files.</p>
-<p>Be careful with invalid file names, they make the backup fail!</p>
+<h2>Descrição</h2>
 
+<p>Script de backup para Linux, com opções de backup espelhado (mirror) e incremental. Desenvolvido por Junon M.</p>
+
+<h2>Requisitos</h2>
+
+<p>- Sistema operacional: Linux
+- File system: ext4 (para backup incremental)</p>
+
+<h2>Instalação</h2>
+
+<p>1. Clone o repositório.<br>
+2. Configure as variáveis no arquivo de configuração.</p>
+
+<h2>Configuração</h2>
+
+<h3>Mirror Backup</h3>
+
+<p>- FROM_PATH: caminho da pasta para backup<br>
+- TO_PATH: caminho da pasta de destino</p>
+
+<p>Exemplo (backup_path.txt):</p>
+
+<p>bash<br>
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")<br>
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")<br>
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")<br>
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")</p>
+
+<h3>Incremental Backup</h3>
+
+<p>- FROM_PATH: caminho da pasta para backup<br>
+- TO_PATH: caminho da pasta de destino<br>
+- DAY_LIMIT: número de dias para manter backups</p>
+
+<p>Exemplo (inc_backup_path.txt):</p>
+
+<p>bash<br>
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")<br>
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")<br>
+TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup1")<br>
+TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup2")<br>
+DAY_LIMIT=7</p>
+
+<h2>Uso</h2>
+
+<p>bash<br>
+./make_incremental_backup.sh<br><br>
+./make_backup.sh<br>
+./restore_backup.sh</p>
+
+<h2>Log e Restauração</h2>
+
+<p>- Logs detalhados no diretório de destino.<br>
+- Restauração automática disponível apenas para backup espelhado.</p>
+
+<h2>Limitações</h2>
+
+<p>- Restauração manual necessária para backup incremental.<br>
+- Nomes de arquivos inválidos podem causar falha no backup.</p>
+
+<h2>Changelog</h2>
+
+<p>2025/01/05 - 1.0.0.9</p>
+
+<p>- Mantém apenas backups recentes.<br>
+- Simplificação de parâmetros.</p>
+
+<h2>Contribuição</h2>
+
+<p>Contribuições são bem-vindas! Envie um pull request com suas melhorias</p>
 <hr>
-
-# 2025/01/05 - 1.0.0.9 
-# Changes:
-<p>1 - Keep only the most recent backups (N days).</p>
-<p>2 - Simplification of configuration parameters.</p>
-<p>3 - Improvements in data presentation.</p>
-
-<hr>
-
-<h3>Mirror Backup Example file:</h3> 
-<h3>backup_path.txt</h3> 
-<br/>
-# Example:
-<br/><br/>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
-<br/>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
-<br/><br/>
-TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")
-<br/>
-TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")
-<br/><br/>
-
-<hr>
-
-<h3> Incremental Backup Example File: </h3> 
-<h3>inc_backup_path.txt</h3>
-<br/><br/>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
-<br/>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
-<br/><br/>
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup1")
-<br/>
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup2")
-<br/><br/>
-DAY_LIMIT=7 # Keep only the most recent backups (7 days)
-<br/><br/>
-
-<hr>
-
-
