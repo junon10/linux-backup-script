@@ -2,8 +2,8 @@
 <h3>Operational System:</h3> Linux
 <h3>File System:</h3> Linux and Windows
 <h3>Author:</h3> Junon M
-<h3>Version:</h3> 1.0.0.3
-<h3>Date:</h3> 2024/02/24
+<h3>Version:</h3> 1.0.0.9
+<h3>Date:</h3> 2025/01/05
 
 <h3>Description:</h3> 
 <p>The Mirroring script runs on any file system, however, the Incremental backup script only works on Linux file systems, such as ext4. After the first copy only the differences are added with the two script variations, ensuring a high backup speed. Both script variations generate very detailed logs on the target drive.</p>
@@ -14,46 +14,44 @@
 
 <hr>
 
+# 2025/01/05 - 1.0.0.9 
+# Changes:
+<p>1 - Keep only the most recent backups (N days).</p>
+<p>2 - Simplification of configuration parameters.</p>
+<p>3 - Improvements in data presentation.</p>
+
+<hr>
+
 <h3>Mirror Backup Example file:</h3> 
 <h3>backup_path.txt</h3> 
 <br/>
 # Example:
 <br/><br/>
-FROM_PATH+=("/home/$USER/Desktop")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
 <br/>
-FROM_PATH+=("/home/$USER/Documents")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
 <br/><br/>
-TO_PATH+=("/media/$USER/Disc_name1/Folder_name")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")
 <br/>
-TO_PATH+=("/media/$USER/Disc_name2/Folder_name")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")
 <br/><br/>
 
 <hr>
 
 <h3> Incremental Backup Example File: </h3> 
-<h3>inc_backup_path.inc</h3>
-<br/>
-# FROM_PATH_ARR[n] Backup source directory (without slash at the end)
-<br/>
-# TO_PATH_ARR[n] Backup destination directories (without slash at the end, and without white spaces)
-<br/>
-# EXTERNAL_STORAGE[n] Target external drives (without slash at the end)
+<h3>inc_backup_path.txt</h3>
 <br/><br/>
-FROM_PATH_ARR[0]="/media/$USER/KINGSTON_1TB/Docs/Develop"
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
 <br/>
-TO_PATH_ARR[0]="bkp/Develop"
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
 <br/><br/>
-FROM_PATH_ARR[1]="/media/$USER/KINGSTON_1TB/Docs/AndroidStudioProjects"
+TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup1")
 <br/>
-TO_PATH_ARR[1]="bkp/AndroidStudioProjects"
+TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup2")
 <br/><br/>
-FROM_PATH_ARR[2]="/media/$USER/KINGSTON_1TB/Instalados/ESP-IDF/Projects"
-<br/>
-TO_PATH_ARR[2]="bkp/ESP-IDF"
+DAY_LIMIT=7 # Keep only the most recent backups (7 days)
 <br/><br/>
-FROM_PATH_ARR[3]="/media/$USER/KINGSTON_1TB/Instalados/STM32CubeIDE"
-<br/>
-TO_PATH_ARR[3]="bkp/STM32CubeIDE"
-<br/><br/>
-EXTERNAL_STORAGE[0]="/media/$USER/Sam128GB"
+
 <hr>
+
+

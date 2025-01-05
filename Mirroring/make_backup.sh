@@ -15,8 +15,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.8"
-app_date="2025/01/04"
+app_version="v1.0.0.9"
+app_date="2025/01/05"
 app_author="Junon M."
 
 app_title() {
@@ -42,7 +42,6 @@ echo "Author: ${app_author}"
 echo "--------------------------------------------------------------------------------"
 echo ""
 echo "Start backup from:"
-echo ""
 for i in ${!FROM_PATH[@]}
 do
   # Exibe o caminho sem a barra final

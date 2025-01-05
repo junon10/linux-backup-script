@@ -1,7 +1,7 @@
-# Example:
 
-FROM_PATH+=("/home/$USER/Desktop")
-FROM_PATH+=("/home/$USER/Documents")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
 
-TO_PATH+=("/media/$USER/Disc_name1/Folder_name")
-TO_PATH+=("/media/$USER/Disc_name2/Folder_name")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")
+
