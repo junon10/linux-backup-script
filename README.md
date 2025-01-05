@@ -71,4 +71,5 @@ DAY_LIMIT=7</p>
 
 <h2>Contribuição</h2>
 
-<p>Contribuições são bem-vindas! Envie um pull request com suas melhorias</p>
+<p>Contribuições são bem-vindas!<br>
+Envie um pull request com suas melhorias</p>
