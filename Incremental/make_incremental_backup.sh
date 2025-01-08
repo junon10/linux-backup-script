@@ -21,13 +21,13 @@ echo "--------------------------------------------------------------------------
 }
 
 
-app_version="v1.0.0.9"
-app_date="2025/01/05"
+app_version="v1.0.0.10"
+app_date="2025/01/08"
 app_author="Junon M."
 
 app_title() {
 echo "$(separator)"
-echo "                  Linux Incremental Backup ${app_version}"
+echo "         LINUX INCREMENTAL BACKUP ${app_version} - ${app_date} - by ${app_author}"
 echo "$(separator)"
 }
 
@@ -43,16 +43,13 @@ sound_error="paplay ./Sounds/error.ogg"
 
 clear
 echo "$(app_title)"
-echo "Date: ${app_date} ${app_version}"
-echo "Author: ${app_author}"
-echo "$(separator)"
 echo ""
 
 
 if [ -v DAY_LIMIT ]; then
   # Verifica se a data limite de backup é válida
   if [ $DAY_LIMIT -gt 0 ] && [ $DAY_LIMIT -lt 90 ]; then
-    echo "DAY_LIMIT: ${DAY_LIMIT} day(s)"
+    echo "[DAY_LIMIT:] ${DAY_LIMIT} day(s)"
   else
     echo "ERROR: INVALID DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
     DAY_LIMIT=7
@@ -63,14 +60,14 @@ else
 fi
 
 echo ""
-echo "Start backup from:"
+echo "[START BACKUP FROM:]"
 for i in ${!FROM_PATH[@]}
 do
   # Mostra sem a barra final %/
   echo "${FROM_PATH[i]%/}"
 done
 echo ""
-echo "To:"
+echo "[TO:]"
 for i in ${!TO_PATH[@]}
 do
   # Mostra sem a barra final %/
@@ -82,7 +79,6 @@ echo ""
 echo "Press [ENTER] to continue, or [CTRL+C] to exit..."
 echo ""
 read
-echo "$(separator)"
 
 # formato do arquivo
 formated_date=$(date +%Y-%m-%d_%H-%M-%S-%A)
@@ -124,27 +120,26 @@ last_subfolder="${from_path##*/}"
       # Caminho (Link) para a pasta de backup mais atual
       latest_link="${to_path}/latest"
 
-      echo "$(separator)"
-      echo "Backing up from:"
+      echo "[BACKING UP FROM:]"
       echo "'${from_path}'"
       echo ""
-      echo "To:"
+      echo "[TO:]"
       echo "'${to_full_path}'"
-      echo "$(separator)"
+      echo ""
 
       if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee ${log_file_details}; then
         
         rm -rf "${latest_link}"
         ln -s "${to_full_path}" "${latest_link}"
         
-        printf "[$formated_date] backup success.\n" >> $log_file
+        printf "[$formated_date] BACKUP SUCCESS.\n" >> $log_file
         echo "" >> ${log_file_details}        
-        echo "backup success." >> ${log_file_details}
-        echo "$(separator)"
-        echo "backup success from:"
+        echo "BACKUP SUCCESS." >> ${log_file_details}
+        echo ""
+        echo "[BACKUP SUCCESS FROM:]"
         echo "'${from_path}'"
         echo ""
-        echo "To:"
+        echo "[TO:]"
         echo "'${to_full_path}'"
         echo ""
 
@@ -153,22 +148,22 @@ last_subfolder="${from_path##*/}"
         #find "${to_path}" -maxdepth 1 -type d -mmin +"${DAY_LIMIT}" -exec rm -rf {} \;
 
         # -mtime=dias
-        echo "Deleting backups older than ${DAY_LIMIT} day(s)..."
+        echo "[KEEPING BACKUPS WITH LESS THAN ${DAY_LIMIT} DAY(S) OLD...]"
         find "${to_path}" -maxdepth 1 -type d -mtime +"${DAY_LIMIT}" -exec rm -rf {} \;
-
+        echo ""
         echo "$(separator)"
         echo ""
-        echo ""
+        #echo ""
       else
         printf "[$formated_date] BACKUP COPY ERROR.\n" >> $log_file
         echo "" >> ${log_file_details}        
         echo "BACKUP COPY ERROR." >> ${log_file_details}
-        echo "$(separator)"
-        echo "BACKUP COPY ERROR FROM:"
+        echo "[BACKUP COPY ERROR FROM:]"
         echo "'${from_path}'"
         echo ""
-        echo "To:"
+        echo "[TO:]"
         echo "'${to_full_path}'"
+        echo ""
         echo "$(separator)"
         echo ""
         echo "Press [ENTER] to exit..."
@@ -181,7 +176,7 @@ last_subfolder="${from_path##*/}"
   done
 done
 
-echo "Completed!"
+echo "[DONE!]"
 echo ""
 echo "Press [ENTER] to exit..."
 echo ""

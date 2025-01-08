@@ -15,14 +15,18 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.9"
-app_date="2025/01/05"
+app_version="v1.0.0.10"
+app_date="2025/01/08"
 app_author="Junon M."
 
+separator() {
+echo "--------------------------------------------------------------------------------"
+}
+
 app_title() {
-echo "--------------------------------------------------------------------------------"
-echo "                         Linux Restore ${app_version}"
-echo "--------------------------------------------------------------------------------"
+echo "$(separator)"
+echo "             LINUX RESTORE ${app_version} - ${app_date} - by ${app_author}"
+echo "$(separator)"
 }
 
 # Beep com alto-falante da placa mãe
@@ -37,11 +41,8 @@ sound_error="paplay ./Sounds/error.ogg"
 
 clear
 echo "$(app_title)"
-echo "Date: ${app_date} ${app_version}"
-echo "Author: ${app_author}"
-echo "--------------------------------------------------------------------------------"
 echo ""
-echo "Where do you want to restore from?"
+echo "[WHERE DO YOU WANT TO RESTORE FROM?]"
 echo ""
 for i in ${!TO_PATH[@]}
 do
@@ -53,12 +54,12 @@ echo ""
 index=
 until grep -E '^[0-9]+$' <<< $index
 do
-read -p "Enter the corresponding index number: " index
+read -p "[ENTER THE CORRESPONDING INDEX NUMBER:] " index
 done
 echo ""
 
 if [ ! $index -ge 0 ]; then  
-  echo "Error: index less than zero!"
+  echo "[ERROR: INDEX LESS THAN ZERO!]"
   echo "Press [ENTER] to exit..."
   echo ""
   read
@@ -66,7 +67,7 @@ if [ ! $index -ge 0 ]; then
 fi
 
 if [ ! $index -le $[${#TO_PATH[@]}-1] ]; then  
-  echo "Error: index greater than the maximum available!"
+  echo "[ERROR: INDEX GREATER THAN THE MAXIMUM AVAILABLE!]"
   echo "Press [ENTER] to exit..."
   echo ""
   read
@@ -80,10 +81,10 @@ echo "$(app_title)"
 arr_disk[0]="${TO_PATH[${index}]%/}"
 
 echo ""
-echo "Selected restoration from:"
+echo "[SELECTED RESTORATION FROM:]"
   echo "${index}. ${arr_disk[0]}"
 echo ""
-echo "To:"
+echo "[TO:]"
 for i in ${!FROM_PATH[@]}
 do
   # Exibe removendo qualquer barra do final
@@ -113,7 +114,7 @@ last_subfolder="${from_path##*/}"
   # Se a pasta não existir, escreva
   if [ -d ${from_path} ]; then 
     # Se a pasta já existir mostre uma msg 
-    echo "ERROR: Folder '${from_path}' already exists!"    
+    echo "[ERROR: FOLDER '${from_path}' ALREADY EXISTS!]"    
     read -p "Press [W] to overwrite, or [ENTER] to Skip: " opt
   else
     opt="w"
@@ -142,31 +143,30 @@ last_subfolder="${from_path##*/}"
 
         log_file_details="${log_path_details}/${formated_date}-details.log"
 
-        echo "Log files will be written to '${log_path}'"
-        echo ""
+        echo "[LOG FILES WILL BE WRITTEN TO:] '${log_path}'"
 
-        printf "Restore from '${to_path}'\nstarted on [$formated_date]\n" >> $log_file
+        printf "RESTORE FROM '${to_path}'\nSTARTED ON [$formated_date]\n" >> $log_file
         echo ""
-        echo "Restore from '${to_path}'"
-        echo "started on ${formated_date}"
-        echo "to '${from_path}'"
+        echo "[RESTORE FROM:] '${to_path}'"
+        echo "[STARTED ON:] ${formated_date}"
+        echo "[TO:] '${from_path}'"
 
         if rsync -a --progress ${to_path} ${from_path} | tee ${log_file_details}; then
           formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
-          printf "successfully completed on [$formated_date]\n\n" >> $log_file
-          echo "successfully completed!"
-          echo "successfully completed!" >> ${log_file_details}
+          printf "DONE ON [$formated_date]\n\n" >> $log_file
+          echo "[DONE!]"
+          echo "DONE!" >> ${log_file_details}
           echo ""
         else
           formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
-          printf "RESTALL ERROR ON [$formated_date]\n\n" >> $log_file
-          echo "RESTALL ERROR!"
-          echo "RESTALL ERROR!" >> ${log_file_details}
+          printf "RESTORE ERROR ON [$formated_date]\n\n" >> $log_file
+          echo "[RESTORE ERROR!]"
+          echo "RESTORE ERROR!" >> ${log_file_details}
           echo ""
           ${sound_error} 
         fi
       else
-        echo "ERROR: DISK UNIT '${arr_disk[i]}' NOT MOUNTED!"
+        echo "[ERROR: DISK UNIT '${arr_disk[i]}' NOT MOUNTED!]"
         echo ""
       fi
     done

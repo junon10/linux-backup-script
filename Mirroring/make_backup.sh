@@ -15,15 +15,20 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.9"
-app_date="2025/01/05"
+app_version="v1.0.0.10"
+app_date="2025/01/08"
 app_author="Junon M."
 
-app_title() {
-echo "--------------------------------------------------------------------------------"
-echo "                         Linux Backup ${app_version}"
+separator() {
 echo "--------------------------------------------------------------------------------"
 }
+
+app_title() {
+echo "$(separator)"
+echo "          LINUX MIRRORING BACKUP ${app_version} - ${app_date} - by ${app_author}"
+echo "$(separator)"
+}
+
 
 # Beep com alto-falante da placa mãe
 # beep="echo -e \"\a\""
@@ -37,11 +42,8 @@ sound_error="paplay ./Sounds/error.ogg"
 
 clear
 echo "$(app_title)"
-echo "Date: ${app_date} ${app_version}"
-echo "Author: ${app_author}"
-echo "--------------------------------------------------------------------------------"
 echo ""
-echo "Start backup from:"
+echo "[START BACKUP FROM:]"
 for i in ${!FROM_PATH[@]}
 do
   # Exibe o caminho sem a barra final
@@ -49,14 +51,16 @@ do
 done
 
 echo ""
-echo "To:"
+echo "[TO:]"
 for i in ${!TO_PATH[@]}
 do
   # Exibe o caminho sem a barra final
   echo "${TO_PATH[i]%/}"
 done
 echo ""
-echo "Press [ENTER] to execute now, or [CTRL+C] to exit..."
+echo "$(separator)"
+echo ""
+echo "Press [ENTER] to make backup now, or [CTRL+C] to exit..."
 read
 
 #-----------------------------------------------------------------------------------------------------
@@ -98,29 +102,29 @@ last_subfolder="${from_path##*/}"
 
       log_file_details="${log_path_details}/${formated_date}-details.log"   
 
-      printf "Backup from '${from_path}'\nstarted on [$formated_date]\n" >> $log_file
+      printf "BACKUP FROM '${from_path}'\nSTARTED ON [$formated_date]\n" >> $log_file
       echo ""
-      echo "Backup from '${from_path}'" 
-      echo "started on ${formated_date}"
-      echo "to '${to_path}'"
+      echo "[BACKUP FROM:] '${from_path}'" 
+      echo "[STARTED ON:] ${formated_date}"
+      echo "[TO:] '${to_path}'"
 
       if rsync -a --progress --delete "${from_path}" "${to_path}" | tee ${log_file_details}; then
         formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
-        printf "successfully completed on [$formated_date]\n\n" >> $log_file
-        echo "successfully completed!"
-        echo "successfully completed!" >> ${log_file_details}
+        printf "DONE ON [$formated_date]\n\n" >> $log_file
+        echo "[DONE!]"
+        echo "DONE!" >> ${log_file_details}
         echo ""
       else
         formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
         printf "BACKUP COPY ERROR ON [$formated_date]\n\n" >> $log_file
-        echo "BACKUP COPY ERROR!"
+        echo "[BACKUP COPY ERROR!]"
         echo "BACKUP COPY ERROR!" >> ${log_file_details}
         echo ""
         ${sound_error} 
       fi
     else
-      echo "ERROR: DISK UNIT '${TO_PATH[i]}' NOT MOUNTED!"
-      echo "OR THE PATH DOES NOT EXIST!"
+      echo "[ERROR: DISK UNIT '${TO_PATH[i]}' NOT MOUNTED!"
+      echo "OR THE PATH DOES NOT EXIST!]"
       echo ""
     fi
   done
