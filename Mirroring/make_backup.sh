@@ -4,9 +4,9 @@ CONFIG_FILE=./backup_path.txt
 
 if [ ! -f ${CONFIG_FILE} ]
 then
-  echo "Error: The configuration file:" 
+  echo "[ERROR] THE CONFIGURATION FILE:" 
   echo "'${CONFIG_FILE}'"
-  echo "was not found!"
+  echo "WAS NOT FOUND!"
   echo ""
   echo "Press [ENTER] to exit..."
   read
@@ -15,7 +15,7 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.10"
+app_version="v1.0.0.11"
 app_date="2025/01/08"
 app_author="Junon M."
 
@@ -43,7 +43,7 @@ sound_error="paplay ./Sounds/error.ogg"
 clear
 echo "$(app_title)"
 echo ""
-echo "[START BACKUP FROM:]"
+echo "[START BACKUP FROM]"
 for i in ${!FROM_PATH[@]}
 do
   # Exibe o caminho sem a barra final
@@ -51,7 +51,7 @@ do
 done
 
 echo ""
-echo "[TO:]"
+echo "[TO]"
 for i in ${!TO_PATH[@]}
 do
   # Exibe o caminho sem a barra final
@@ -60,10 +60,9 @@ done
 echo ""
 echo "$(separator)"
 echo ""
-echo "Press [ENTER] to make backup now, or [CTRL+C] to exit..."
+echo "Press [ENTER] to backup copy now, or [CTRL+C] to exit..."
 read
-
-#-----------------------------------------------------------------------------------------------------
+echo "$(separator)"
 
 # Data e Hora atual
 formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
@@ -104,32 +103,41 @@ last_subfolder="${from_path##*/}"
 
       printf "BACKUP FROM '${from_path}'\nSTARTED ON [$formated_date]\n" >> $log_file
       echo ""
-      echo "[BACKUP FROM:] '${from_path}'" 
-      echo "[STARTED ON:] ${formated_date}"
-      echo "[TO:] '${to_path}'"
+      echo "[BACKUP FROM] '${from_path}'" 
+      echo "[STARTED ON] ${formated_date}"
+      echo "[TO] '${to_path}'"
+      echo ""
 
       if rsync -a --progress --delete "${from_path}" "${to_path}" | tee ${log_file_details}; then
         formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
         printf "DONE ON [$formated_date]\n\n" >> $log_file
-        echo "[DONE!]"
-        echo "DONE!" >> ${log_file_details}
+        echo "DONE" >> ${log_file_details}
+        echo ""        
+        echo "[BACKUP SUCCESS FROM] '${from_path}'" 
+        echo "[TO] '${to_path}'"
         echo ""
       else
         formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
         printf "BACKUP COPY ERROR ON [$formated_date]\n\n" >> $log_file
-        echo "[BACKUP COPY ERROR!]"
-        echo "BACKUP COPY ERROR!" >> ${log_file_details}
+        echo "BACKUP COPY ERROR" >> ${log_file_details}
+        echo ""
+        echo "[BACKUP COPY ERROR FROM] '${from_path}'" 
+        echo "[TO] '${to_path}'"
         echo ""
         ${sound_error} 
       fi
     else
-      echo "[ERROR: DISK UNIT '${TO_PATH[i]}' NOT MOUNTED!"
-      echo "OR THE PATH DOES NOT EXIST!]"
+      echo "[ERROR] THE PATH:"
+      echo "'${TO_PATH[i]}'"
+      echo "DOES NOT EXIST!"
       echo ""
     fi
+    echo "$(separator)"
   done
 done
 
+echo ""
+echo "[DONE]"
 echo ""
 echo "Press [ENTER] to exit..."
 echo ""

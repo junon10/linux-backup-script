@@ -4,9 +4,9 @@ CONFIG_FILE=./inc_backup_path.txt
 
 if [ ! -f ${CONFIG_FILE} ]
 then
-  echo "Error: The configuration file:" 
+  echo "[ERROR] THE CONFIGURATION FILE:" 
   echo "'${CONFIG_FILE}'"
-  echo "was not found!"
+  echo "WAS NOT FOUND!"
   echo ""
   echo "Press [ENTER] to exit..."
   read
@@ -21,7 +21,7 @@ echo "--------------------------------------------------------------------------
 }
 
 
-app_version="v1.0.0.10"
+app_version="v1.0.0.11"
 app_date="2025/01/08"
 app_author="Junon M."
 
@@ -49,25 +49,25 @@ echo ""
 if [ -v DAY_LIMIT ]; then
   # Verifica se a data limite de backup é válida
   if [ $DAY_LIMIT -gt 0 ] && [ $DAY_LIMIT -lt 90 ]; then
-    echo "[DAY_LIMIT:] ${DAY_LIMIT} day(s)"
+    echo "[DAY_LIMIT] ${DAY_LIMIT} day(s)"
   else
-    echo "ERROR: INVALID DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
+    echo "[ERROR] INVALID DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
     DAY_LIMIT=7
   fi
 else
-    echo "ERROR: INDEFINED DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
+    echo "[ERROR] INDEFINED DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
     DAY_LIMIT=7
 fi
 
 echo ""
-echo "[START BACKUP FROM:]"
+echo "[START BACKUP FROM]"
 for i in ${!FROM_PATH[@]}
 do
   # Mostra sem a barra final %/
   echo "${FROM_PATH[i]%/}"
 done
 echo ""
-echo "[TO:]"
+echo "[TO]"
 for i in ${!TO_PATH[@]}
 do
   # Mostra sem a barra final %/
@@ -120,10 +120,10 @@ last_subfolder="${from_path##*/}"
       # Caminho (Link) para a pasta de backup mais atual
       latest_link="${to_path}/latest"
 
-      echo "[BACKING UP FROM:]"
+      echo "[BACKING UP FROM]"
       echo "'${from_path}'"
       echo ""
-      echo "[TO:]"
+      echo "[TO]"
       echo "'${to_full_path}'"
       echo ""
 
@@ -136,10 +136,10 @@ last_subfolder="${from_path##*/}"
         echo "" >> ${log_file_details}        
         echo "BACKUP SUCCESS." >> ${log_file_details}
         echo ""
-        echo "[BACKUP SUCCESS FROM:]"
+        echo "[BACKUP SUCCESS FROM]"
         echo "'${from_path}'"
         echo ""
-        echo "[TO:]"
+        echo "[TO]"
         echo "'${to_full_path}'"
         echo ""
 
@@ -158,10 +158,10 @@ last_subfolder="${from_path##*/}"
         printf "[$formated_date] BACKUP COPY ERROR.\n" >> $log_file
         echo "" >> ${log_file_details}        
         echo "BACKUP COPY ERROR." >> ${log_file_details}
-        echo "[BACKUP COPY ERROR FROM:]"
+        echo "[BACKUP COPY ERROR FROM]"
         echo "'${from_path}'"
         echo ""
-        echo "[TO:]"
+        echo "[TO]"
         echo "'${to_full_path}'"
         echo ""
         echo "$(separator)"
@@ -176,7 +176,7 @@ last_subfolder="${from_path##*/}"
   done
 done
 
-echo "[DONE!]"
+echo "[DONE]"
 echo ""
 echo "Press [ENTER] to exit..."
 echo ""
