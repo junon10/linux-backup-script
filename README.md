@@ -65,7 +65,7 @@ DAY_LIMIT=7</p>
 <h2>Changelog</h2>
 
 <p>2025/01/05 - 1.0.0.9<br>
-- Simplificação de parâmetros.
+- Simplificação de parâmetros.<br>
 - Adicionada função para manter apenas os backups mais recentes<br>
 - Reorganização de código</p>
 
