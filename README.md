@@ -72,6 +72,9 @@ DAY_LIMIT=7</p>
 <p>2025/01/08 - 1.0.0.10<br>
 - Melhoria na disposição, destaque e limpeza das mensagens no terminal</p>
 
+<p>2025/01/08 - 1.0.0.11<br>
+- Melhoria na formatação das mensagens</p>
+
 <h2>Contribuição</h2>
 
 <p>Contribuições são bem-vindas!<br>
