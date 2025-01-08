@@ -65,14 +65,12 @@ DAY_LIMIT=7</p>
 <h2>Changelog</h2>
 
 <p>2025/01/05 - 1.0.0.9<br>
+- Simplificação de parâmetros.
 - Adicionada função para manter apenas os backups mais recentes<br>
 - Reorganização de código</p>
 
 <p>2025/01/08 - 1.0.0.10<br>
 - Melhoria na disposição, destaque e limpeza das mensagens no terminal</p>
-
-<p>- Mantém apenas backups recentes.<br>
-- Simplificação de parâmetros.</p>
 
 <h2>Contribuição</h2>
 
