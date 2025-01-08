@@ -25,7 +25,7 @@ echo "--------------------------------------------------------------------------
 
 app_title() {
 echo "$(separator)"
-echo "          LINUX MIRRORING BACKUP ${app_version} - ${app_date} - by ${app_author}"
+echo "         LINUX SYNC BACKUP ${app_version} - ${app_date} - by ${app_author}"
 echo "$(separator)"
 }
 
