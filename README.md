@@ -45,7 +45,7 @@ duplicando o espaço utilizado no disco de destino.<br>
 
 7. A primeira cópia de backup será completa (demorada),<br>
 mas as seguintes serão bem mais rápidas por copiar somente<br> 
-os arquivos modificados desde o último backup.
+os arquivos modificados desde o último backup.</p>
 
 <h2>Configuração</h2>
 
