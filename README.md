@@ -95,11 +95,16 @@ DAY_LIMIT=7</p>
 <h2>Limitações</h2>
 
 <p>
-- Restauração manual necessária para backup incremental.<br>
-- Nomes de arquivos inválidos podem causar falha no backup.<br>
-- Não podem ser feitos backups de arquivos do sistema Linux<br> 
-para uma partição NTFS, porque pode causar perda de dados,<br> 
-sempre use ext4 ou btrfs.</p>
+1. Ainda não existe script de restauração para o backup incremental.<br>
+
+2. Nomes de arquivos inválidos podem causar falha no backup.<br>
+
+3. Não podem ser feitos backups de arquivos do sistema Linux<br> 
+para uma partição Windows (NTFS, EXFAT, FAT32, ou FAT) porque<br> 
+causa erros, sempre use sistemas de arquivos Linux<br>
+por exemplo ext4 ou btrfs. No entanto você ainda pode usar<br> 
+um sistema de arquivos NTFS para copiar os seus documentos<br> 
+com sync backup(espelhado).</p>
 
 <h2>Changelog</h2>
 
