@@ -106,6 +106,12 @@ por exemplo ext4 ou btrfs. No entanto você ainda pode usar<br>
 um sistema de arquivos NTFS para copiar os seus documentos<br> 
 com sync backup(espelhado).</p>
 
+4. Evite mudar o username da sua conta linux, pois as<br> 
+referências dos backups utilizam links simbólicos com<br>
+os caminhos completos, que podem criar um novo backup,<br> 
+duplicando o espaço usado. Esta limitação será removida<br>
+futuramente com novas atualizações. 
+
 <h2>Changelog</h2>
 
 <p>2025/01/05 - 1.0.0.9<br>
