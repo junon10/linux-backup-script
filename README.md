@@ -1,21 +1,18 @@
-<h2>Linux Backup Script</h2>
+## Linux Backup Script
 
-<h2>Descrição</h2>
+## Descrição
 
-<p>Script de backup para Linux, com opções de backup espelhado (mirror) e incremental.<br>
-Desenvolvido por Junon M.</p>
+- Script de backup para Linux, com opções de backup espelhado (mirror) e incremental.<br>
+Desenvolvido por Junon M.<br>
 
-<h2>Requisitos</h2>
+## Requisitos
 
-<p>
-- Sistema operacional: Linux<br>
-- Sistema de Arquivos: ext4, btrfs<br>
-- Nota: o Backup espelhado (sync) também funciona no sistema NTFS para cópia de arquivos comuns, isto é, sem arquivos do sistema Linux.</p>
+- Sistema operacional: Linux.<br>
+- Sistema de Arquivos: ext4, btrfs.<br>
+- Nota: o Backup espelhado (sync) também funciona no sistema NTFS para cópia de arquivos comuns, isto é, sem arquivos do sistema Linux.<br>
  
-<h2>Instalação</h2>
+## Instalação
 
-<p>
-<br>
 - Clone o repositório.<br>
 
 - É recomendado criptografar o SSD ou Flash-Drive de destino com LUKS, e definir uma senha forte que só você conheça.<br>
@@ -28,78 +25,74 @@ Desenvolvido por Junon M.</p>
 
 - Escolha qual dos scripts você vai usar, o Sync Backup(make_backup.sh) ou incremental (make_incremental_backup.sh), pois cada um deles criará suas próprias cópias das suas pastas, duplicando o espaço utilizado no disco de destino.<br>
 
-- A primeira cópia de backup será completa (demorada), mas as seguintes serão bem mais rápidas por copiar somente os arquivos modificados desde o último backup.</p>
+- A primeira cópia de backup será completa (demorada), mas as seguintes serão bem mais rápidas por copiar somente os arquivos modificados desde o último backup.<br>
 
-<h2>Configuração</h2>
+## Configuração
 
 <h3>Mirror Backup</h3>
 
-<p>
 - FROM_PATH: caminho da pasta para backup<br>
-- TO_PATH: caminho da pasta de destino</p>
+- TO_PATH: caminho da pasta de destino<br>
 
 <p>Exemplo (backup_path.txt):</p>
 
-<p>bash<br>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")<br>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")<br>
-TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")<br>
-TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")</p>
+```bash
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")
+```
 
 <h3>Incremental Backup</h3>
 
-<p>
 - FROM_PATH: caminho da pasta para backup<br>
 - TO_PATH: caminho da pasta de destino<br>
-- DAY_LIMIT: número de dias para manter backups</p>
+- DAY_LIMIT: número de dias para manter backups<br>
 
 <p>Exemplo (inc_backup_path.txt):</p>
 
-<p>bash<br>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")<br>
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")<br>
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup1")<br>
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup2")<br>
-DAY_LIMIT=7</p>
+```bash
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
+TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup1")
+TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup2")
+DAY_LIMIT=7
+```
 
-<h2>Uso</h2>
+## Uso
 
-<p>bash<br>
-./make_incremental_backup.sh<br>
-./make_backup.sh<br>
-./restore_backup.sh</p>
+```bash
+./make_incremental_backup.sh
+./make_backup.sh
+./restore_backup.sh
+```
 
-<h2>Log e Restauração</h2>
-
-<p>
+## Log e Restauração
 - Logs detalhados no diretório de destino.<br>
-- Restauração automática disponível apenas para backup espelhado.</p>
+- Restauração automática disponível apenas para backup espelhado.<br>
 
-<h2>Limitações</h2>
-<p>
-<br>
+## Limitações
 - Ainda não existe script de restauração para o backup incremental.<br>
 
 - Nomes de arquivos inválidos podem causar falha no backup.<br>
 
-- Não podem ser feitos backups de arquivos do sistema Linux para uma partição Windows (NTFS, EXFAT, FAT32, ou FAT) porque causa erros, sempre use sistemas de arquivos Linux por exemplo ext4 ou btrfs. No entanto você ainda pode usar um sistema de arquivos NTFS para copiar os seus documentos com sync backup(espelhado).</p>
+- Não podem ser feitos backups de arquivos do sistema Linux para uma partição Windows (NTFS, EXFAT, FAT32, ou FAT) porque causa erros, sempre use sistemas de arquivos Linux por exemplo ext4 ou btrfs. No entanto você ainda pode usar um sistema de arquivos NTFS para copiar os seus documentos com sync backup(espelhado).<br>
 
-- Evite mudar o username da sua conta linux, pois as referências dos backups utilizam links simbólicos com os caminhos completos, que podem criar um novo backup, duplicando o espaço usado. Esta limitação será removida futuramente com novas atualizações. 
+- Evite mudar o username da sua conta linux, pois as referências dos backups utilizam links simbólicos com os caminhos completos, que podem criar um novo backup, duplicando o espaço usado. Esta limitação será removida futuramente com novas atualizações.<br> 
 
-<h2>Changelog</h2>
+## Changelog
 
-<p>2025/01/05 - 1.0.0.9<br>
+### 2025/01/05 - 1.0.0.9
 - Simplificação de parâmetros.<br>
 - Adicionada função para manter apenas os backups mais recentes<br>
-- Reorganização de código</p>
+- Reorganização de código<br>
 
-<p>2025/01/08 - 1.0.0.10<br>
-- Melhoria na disposição, destaque e limpeza das mensagens no terminal</p>
+### 2025/01/08 - 1.0.0.10
+- Melhoria na disposição, destaque e limpeza das mensagens no terminal<br>
 
-<p>2025/01/08 - 1.0.0.11<br>
-- Melhoria na formatação das mensagens</p>
+### 2025/01/08 - 1.0.0.11
+- Melhoria na formatação das mensagens<br>
 
-<h2>Contribuição</h2>
+## Contribuição
 
-<p>Contribuições são bem-vindas!<br>
-Envie um pull request com suas melhorias</p>
+- Contribuições são bem-vindas! Envie um pull request com suas melhorias.<br>
