@@ -67,20 +67,20 @@ DAY_LIMIT=7
 ./restore_backup.sh
 ```
 
-## Log e Restauração
+## Vantagens
 - Logs detalhados no diretório de destino.<br>
-- Restauração automática disponível apenas para backup espelhado.<br>
+
 
 ## Limitações
-- Ainda não existe script de restauração para o backup incremental.<br>
+- Assistente de restauração por script disponível apenas para backup espelhado, para a restauração de backups incrementais é necessário escolher a pasta com a data específica e copiar para seu sistema<br>
 
-- Nomes de arquivos inválidos podem causar falha no backup.<br>
+- Nomes de arquivos inválidos podem causar erros no backup.<br>
 
 - Não podem ser feitos backups de arquivos do sistema Linux para uma partição Windows (NTFS, EXFAT, FAT32, ou FAT) porque causa erros, sempre use sistemas de arquivos Linux por exemplo ext4 ou btrfs. No entanto você ainda pode usar um sistema de arquivos NTFS para copiar os seus documentos com sync backup(espelhado).<br>
 
 - Evite mudar o username da sua conta linux, pois as referências dos backups utilizam links simbólicos com os caminhos completos, que podem criar um novo backup, duplicando o espaço usado. Esta limitação será removida futuramente com novas atualizações.<br> 
 
-## Changelog
+## Log de Alterações
 
 ### 2025/01/05 - 1.0.0.9
 - Simplificação de parâmetros.<br>
