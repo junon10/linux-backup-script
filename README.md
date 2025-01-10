@@ -93,6 +93,9 @@ DAY_LIMIT=7
 ### 2025/01/08 - 1.0.0.11
 - Melhoria na formatação das mensagens<br>
 
+## Repositório
+[https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
+
 ## Contribuição
 
 - Contribuições são bem-vindas! Envie um pull request com suas melhorias.<br>
