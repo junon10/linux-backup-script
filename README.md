@@ -15,6 +15,7 @@ Desenvolvido por Junon M.</p>
 <h2>Instalação</h2>
 
 <p>
+<br>
 - Clone o repositório.<br>
 
 - É recomendado criptografar o SSD ou Flash-Drive de destino com LUKS, e definir uma senha forte que só você conheça.<br>
@@ -75,8 +76,8 @@ DAY_LIMIT=7</p>
 - Restauração automática disponível apenas para backup espelhado.</p>
 
 <h2>Limitações</h2>
-
 <p>
+<br>
 - Ainda não existe script de restauração para o backup incremental.<br>
 
 - Nomes de arquivos inválidos podem causar falha no backup.<br>
