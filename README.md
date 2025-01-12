@@ -78,7 +78,7 @@ DAY_LIMIT=7
 
 - Não podem ser feitos backups de arquivos do sistema Linux para uma partição Windows (NTFS, EXFAT, FAT32, ou FAT) porque causa erros, sempre use sistemas de arquivos Linux por exemplo ext4 ou btrfs. No entanto você ainda pode usar um sistema de arquivos NTFS para copiar os seus documentos com sync backup(espelhado).<br>
 
-- Evite mudar o username da sua conta linux, pois as referências dos backups utilizam links simbólicos com os caminhos completos, que podem criar um novo backup, duplicando o espaço usado. Esta limitação será removida futuramente com novas atualizações.<br> 
+- Evite mudar o username da sua conta linux, pois as referências dos backups utilizam links simbólicos com os caminhos completos. Esta limitação será removida futuramente com novas atualizações.<br> 
 
 ## Log de Alterações
 
