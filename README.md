@@ -105,6 +105,9 @@ DAY_LIMIT=7
 - Melhoria nos logs e mensagens<br>
 - Novos scripts de Backup incremental e restauração com o comando TAR<br>
 
+### 2025/01/13 - 1.0.0.13
+- Correção do script (make_rsync_inc_backup.sh) de links completos para links relativos<br>
+
 ## Repositório
 [https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
 

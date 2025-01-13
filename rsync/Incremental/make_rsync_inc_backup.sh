@@ -12,7 +12,7 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.12"
+app_version="v1.0.0.13"
 app_date="2025/01/13"
 app_author="Junon M."
 
@@ -72,7 +72,6 @@ echo ""
 echo "$(separator)"
 echo ""
 echo "Press [ENTER] to continue, or [CTRL+C] to exit..."
-echo ""
 read
 echo "$(separator)"
 
@@ -117,10 +116,28 @@ last_subfolder="${from_path##*/}"
 
       printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
-      if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee ${log_file_details}; then
+      if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee -a ${log_file_details}; then
         
         rm -rf "${latest_link}"
-        ln -s "${to_full_path}" "${latest_link}"
+
+        # Com caminho completo
+        # ln -s "${to_full_path}" "${latest_link}"
+
+        # Obtém o caminho relativo, pegando a última subpasta.
+        link="${latest_link##*/}" 
+        relative_path="${to_full_path##*/}"
+
+        # Obtém o path incial.
+        initial_path=$(pwd)        
+
+        # Entra no caminho de destino.
+        cd "${to_path}"
+
+        # Cria um link com caminho relativo.
+        ln -s ./"${relative_path}" ./"${link}"
+
+        # Retorna ao path inicial.
+        cd "${initial_path}"
 
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
         printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
@@ -134,8 +151,7 @@ last_subfolder="${from_path##*/}"
         find "${to_path}" -maxdepth 1 -type d -mtime +"${DAY_LIMIT}" -exec rm -rf {} \;
         echo ""
         echo "$(separator)"
-        echo ""
-        #echo ""
+
       else
 
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
@@ -144,7 +160,6 @@ last_subfolder="${from_path##*/}"
         echo "$(separator)"
         echo ""
         echo "Press [ENTER] to exit..."
-        echo ""
         read
         ${sound_error}
         exit 1
