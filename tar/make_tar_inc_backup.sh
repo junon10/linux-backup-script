@@ -4,10 +4,7 @@ CONFIG_FILE=./inc_backup_path.txt
 
 if [ ! -f ${CONFIG_FILE} ]
 then
-  echo "[ERROR] THE CONFIGURATION FILE:" 
-  echo "'${CONFIG_FILE}'"
-  echo "WAS NOT FOUND!"
-  echo ""
+  printf "ERROR: THE CONFIGURATION FILE '${CONFIG_FILE}' WAS NOT FOUND!\n\n"
   echo "Press [ENTER] to exit..."
   read
   exit
@@ -15,19 +12,17 @@ fi
 
 source ${CONFIG_FILE}
 
+app_version="v1.0.0.12"
+app_date="2025/01/13"
+app_author="Junon M."
 
 separator() {
 echo "--------------------------------------------------------------------------------"
 }
 
-
-app_version="v1.0.0.11"
-app_date="2025/01/08"
-app_author="Junon M."
-
 app_title() {
 echo "$(separator)"
-echo "         LINUX INCREMENTAL BACKUP ${app_version} - ${app_date} - by ${app_author}"
+echo " LINUX TAR INCREMENTAL BACKUP COPY ${app_version} - ${app_date} - by ${app_author}"
 echo "$(separator)"
 }
 
@@ -45,29 +40,30 @@ clear
 echo "$(app_title)"
 echo ""
 
-
+<<comment
 if [ -v DAY_LIMIT ]; then
   # Verifica se a data limite de backup é válida
   if [ $DAY_LIMIT -gt 0 ] && [ $DAY_LIMIT -lt 90 ]; then
-    echo "[DAY_LIMIT] ${DAY_LIMIT} day(s)"
+    echo "DAY_LIMIT ${DAY_LIMIT} day(s)"
   else
-    echo "[ERROR] INVALID DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
+    echo "ERROR: INVALID DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
     DAY_LIMIT=7
   fi
 else
-    echo "[ERROR] INDEFINED DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
+    echo "ERROR: INDEFINED DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
     DAY_LIMIT=7
 fi
-
 echo ""
-echo "[START BACKUP FROM]"
+comment
+
+echo "START BACKUP FROM"
 for i in ${!FROM_PATH[@]}
 do
   # Mostra sem a barra final %/
   echo "${FROM_PATH[i]%/}"
 done
 echo ""
-echo "[TO]"
+echo "TO"
 for i in ${!TO_PATH[@]}
 do
   # Mostra sem a barra final %/
@@ -75,10 +71,9 @@ do
 done
 echo ""
 echo "$(separator)"
-echo ""
-echo "Press [ENTER] to continue, or [CTRL+C] to exit..."
-echo ""
+printf "\nPress [ENTER] to continue, or [CTRL+C] to exit...\n"
 read
+echo "$(separator)"
 
 # formato do arquivo
 formated_date=$(date +%Y-%m-%d_%H-%M-%S-%A)
@@ -120,65 +115,42 @@ last_subfolder="${from_path##*/}"
       # Caminho (Link) para a pasta de backup mais atual
       latest_link="${to_path}/latest"
 
-      echo "[BACKING UP FROM]"
-      echo "'${from_path}'"
-      echo ""
-      echo "[TO]"
-      echo "'${to_full_path}'"
-      echo ""
+      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
-      if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee ${log_file_details}; then
+      snar_file="${to_path}/daily.snar"
+      
+      # Crie o arquivo snar se não existir
+      [ ! -f "$snar_file" ] && touch "$snar_file"
+
+      backup_file="${to_full_path}.tar.gz"
         
-        rm -rf "${latest_link}"
-        ln -s "${to_full_path}" "${latest_link}"
-        
-        printf "[$formated_date] BACKUP SUCCESS.\n" >> $log_file
-        echo "" >> ${log_file_details}        
-        echo "BACKUP SUCCESS." >> ${log_file_details}
-        echo ""
-        echo "[BACKUP SUCCESS FROM]"
-        echo "'${from_path}'"
-        echo ""
-        echo "[TO]"
-        echo "'${to_full_path}'"
-        echo ""
+      if tar -czf "${backup_file}" --listed-incremental="${snar_file}" -C "${from_path}" . --verbose | tee "${log_file_details}"; then
+        formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)      
+        printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
         # -mmin=minutos (DEBUG)
         #echo "Deleting backups older than ${DAY_LIMIT} minute(s)..."
         #find "${to_path}" -maxdepth 1 -type d -mmin +"${DAY_LIMIT}" -exec rm -rf {} \;
 
         # -mtime=dias
-        echo "[KEEPING BACKUPS WITH LESS THAN ${DAY_LIMIT} DAY(S) OLD...]"
-        find "${to_path}" -maxdepth 1 -type d -mtime +"${DAY_LIMIT}" -exec rm -rf {} \;
-        echo ""
+        #printf "KEEPING BACKUPS WITH LESS THAN ${DAY_LIMIT} DAY(S) OLD...\n"
+        #find "${to_path}" -maxdepth 1 -type d -mtime +"${DAY_LIMIT}" -exec rm -rf {} \;
+
         echo "$(separator)"
-        echo ""
-        #echo ""
       else
-        printf "[$formated_date] BACKUP COPY ERROR.\n" >> $log_file
-        echo "" >> ${log_file_details}        
-        echo "BACKUP COPY ERROR." >> ${log_file_details}
-        echo "[BACKUP COPY ERROR FROM]"
-        echo "'${from_path}'"
-        echo ""
-        echo "[TO]"
-        echo "'${to_full_path}'"
-        echo ""
+        formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+        printf "\nBACKUP COPY ERROR '${formated_date}'\n FROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+        ${sound_error} 
         echo "$(separator)"
-        echo ""
-        echo "Press [ENTER] to exit..."
-        echo ""
+        printf "\nPress [ENTER] to exit...\n"
         read
-        ${sound_error}
         exit 1
       fi
     fi
   done
 done
 
-echo "[DONE]"
-echo ""
-echo "Press [ENTER] to exit..."
-echo ""
+echo "DONE"
+printf "\nPress [ENTER] to exit...\n"
 ${sound_finished}
 read

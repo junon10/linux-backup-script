@@ -4,10 +4,7 @@ CONFIG_FILE=./backup_path.txt
 
 if [ ! -f ${CONFIG_FILE} ]
 then
-  echo "[ERROR] THE CONFIGURATION FILE:" 
-  echo "'${CONFIG_FILE}'"
-  echo "WAS NOT FOUND!"
-  echo ""
+  printf "ERROR: THE CONFIGURATION FILE '${CONFIG_FILE}' WAS NOT FOUND!\n\n"
   echo "Press [ENTER] to exit..."
   read
   exit
@@ -15,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.11"
-app_date="2025/01/08"
+app_version="v1.0.0.12"
+app_date="2025/01/13"
 app_author="Junon M."
 
 separator() {
@@ -25,10 +22,9 @@ echo "--------------------------------------------------------------------------
 
 app_title() {
 echo "$(separator)"
-echo "         LINUX SYNC BACKUP ${app_version} - ${app_date} - by ${app_author}"
+echo " LINUX RSYNC BACKUP COPY ${app_version} - ${app_date} - by ${app_author}"
 echo "$(separator)"
 }
-
 
 # Beep com alto-falante da placa mãe
 # beep="echo -e \"\a\""
@@ -43,7 +39,7 @@ sound_error="paplay ./Sounds/error.ogg"
 clear
 echo "$(app_title)"
 echo ""
-echo "[START BACKUP FROM]"
+echo "START BACKUP FROM"
 for i in ${!FROM_PATH[@]}
 do
   # Exibe o caminho sem a barra final
@@ -51,7 +47,7 @@ do
 done
 
 echo ""
-echo "[TO]"
+echo "TO"
 for i in ${!TO_PATH[@]}
 do
   # Exibe o caminho sem a barra final
@@ -65,7 +61,7 @@ read
 echo "$(separator)"
 
 # Data e Hora atual
-formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
+formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
 
 # Loop for para os diretórios de origem
 for j in ${!FROM_PATH[@]}
@@ -101,45 +97,24 @@ last_subfolder="${from_path##*/}"
 
       log_file_details="${log_path_details}/${formated_date}-details.log"   
 
-      printf "BACKUP FROM '${from_path}'\nSTARTED ON [$formated_date]\n" >> $log_file
-      echo ""
-      echo "[BACKUP FROM] '${from_path}'" 
-      echo "[STARTED ON] ${formated_date}"
-      echo "[TO] '${to_path}'"
-      echo ""
+      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
-      if rsync -a --progress --delete "${from_path}" "${to_path}" | tee ${log_file_details}; then
-        formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
-        printf "DONE ON [$formated_date]\n\n" >> $log_file
-        echo "DONE" >> ${log_file_details}
-        echo ""        
-        echo "[BACKUP SUCCESS FROM] '${from_path}'" 
-        echo "[TO] '${to_path}'"
-        echo ""
+      if rsync -a --progress --delete "${from_path}" "${to_path}" | tee "${log_file_details}"; then
+        formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)      
+        printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
       else
-        formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
-        printf "BACKUP COPY ERROR ON [$formated_date]\n\n" >> $log_file
-        echo "BACKUP COPY ERROR" >> ${log_file_details}
-        echo ""
-        echo "[BACKUP COPY ERROR FROM] '${from_path}'" 
-        echo "[TO] '${to_path}'"
-        echo ""
+        formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+        printf "\nBACKUP COPY ERROR '${formated_date}'\n FROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
         ${sound_error} 
       fi
     else
-      echo "[ERROR] THE PATH:"
-      echo "'${TO_PATH[i]}'"
-      echo "DOES NOT EXIST!"
-      echo ""
+      printf "\nERROR! THE PATH '${TO_PATH[i]}' DOES NOT EXIST!\n\n" | tee -a "${log_file}" "${log_file_details}"
     fi
     echo "$(separator)"
   done
 done
 
-echo ""
-echo "[DONE]"
-echo ""
-echo "Press [ENTER] to exit..."
-echo ""
+printf "\nDONE\n\n"
+printf "Press [ENTER] to exit...\n"
 ${sound_finished}
 read

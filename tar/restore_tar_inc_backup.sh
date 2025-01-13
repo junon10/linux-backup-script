@@ -1,13 +1,10 @@
 #!/bin/bash
 
-CONFIG_FILE=./backup_path.txt
+CONFIG_FILE=./inc_backup_path.txt
 
 if [ ! -f ${CONFIG_FILE} ]
 then
-  echo "[ERROR] THE CONFIGURATION FILE:" 
-  echo "'${CONFIG_FILE}'"
-  echo "WAS NOT FOUND!"
-  echo ""
+  printf "ERROR: THE CONFIGURATION FILE '${CONFIG_FILE}' WAS NOT FOUND!\n\n"
   echo "Press [ENTER] to exit..."
   read
   exit
@@ -15,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.11"
-app_date="2025/01/08"
+app_version="v1.0.0.12"
+app_date="2025/01/13"
 app_author="Junon M."
 
 separator() {
@@ -25,7 +22,7 @@ echo "--------------------------------------------------------------------------
 
 app_title() {
 echo "$(separator)"
-echo "             LINUX RESTORE ${app_version} - ${app_date} - by ${app_author}"
+echo " LINUX TAR INCREMENTAL BACKUP RESTORE ${app_version} - ${app_date} - by ${app_author}"
 echo "$(separator)"
 }
 
@@ -42,7 +39,7 @@ sound_error="paplay ./Sounds/error.ogg"
 clear
 echo "$(app_title)"
 echo ""
-echo "[WHERE DO YOU WANT TO RESTORE FROM?]"
+echo "WHERE DO YOU WANT TO RESTORE FROM?"
 echo ""
 for i in ${!TO_PATH[@]}
 do
@@ -54,12 +51,12 @@ echo ""
 index=
 until grep -E '^[0-9]+$' <<< $index
 do
-read -p "[ENTER THE CORRESPONDING INDEX NUMBER] " index
+read -p "ENTER THE CORRESPONDING INDEX NUMBER " index
 done
 echo ""
 
 if [ ! $index -ge 0 ]; then  
-  echo "[ERROR] INDEX LESS THAN ZERO!"
+  echo "ERROR: INDEX LESS THAN ZERO!"
   echo "Press [ENTER] to exit..."
   echo ""
   read
@@ -67,7 +64,7 @@ if [ ! $index -ge 0 ]; then
 fi
 
 if [ ! $index -le $[${#TO_PATH[@]}-1] ]; then  
-  echo "[ERROR] INDEX GREATER THAN THE MAXIMUM AVAILABLE!"
+  echo "ERROR: INDEX GREATER THAN THE MAXIMUM AVAILABLE!"
   echo "Press [ENTER] to exit..."
   echo ""
   read
@@ -81,10 +78,10 @@ echo "$(app_title)"
 arr_disk[0]="${TO_PATH[${index}]%/}"
 
 echo ""
-echo "[SELECTED RESTORATION FROM]"
+echo "SELECTED RESTORATION FROM"
   echo "${index}. ${arr_disk[0]}"
 echo ""
-echo "[TO]"
+echo "TO"
 for i in ${!FROM_PATH[@]}
 do
   # Exibe removendo qualquer barra do final
@@ -97,7 +94,7 @@ echo "$(separator)"
 echo ""
 
 # Data e Hora atual
-formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
+formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
 
 # Loop for para os diretórios de origem
 for j in ${!FROM_PATH[@]}
@@ -112,7 +109,7 @@ last_subfolder="${from_path##*/}"
   # Se a pasta não existir, escreva
   if [ -d ${from_path} ]; then 
     # Se a pasta já existir mostre uma msg 
-    echo "[ERROR] FOLDER '${from_path}' ALREADY EXISTS!"    
+    echo "ERROR: FOLDER '${from_path}' ALREADY EXISTS!"    
     read -p "Press [W] to overwrite, or [ENTER] to Skip: " opt
   else
     opt="w"
@@ -141,47 +138,36 @@ last_subfolder="${from_path##*/}"
 
         log_file_details="${log_path_details}/${formated_date}-details.log"
 
-        echo "[LOG FILES WILL BE WRITTEN TO] '${log_path}'"
+        printf "\nLOG FILES WILL BE WRITTEN TO '${log_path}'\n"
+        
+        printf "\nRESTORE STARTED '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
-        printf "RESTORE FROM '${to_path}'\nSTARTED ON [$formated_date]\n" >> $log_file
-        echo ""
-        echo "[RESTORE FROM] '${to_path}'"
-        echo "[STARTED ON] ${formated_date}"
-        echo "[TO] '${from_path}'"
-        echo ""        
+        # Liste os arquivos tar incrementais
+        files=$(ls -rt $to_path*.tar.gz)
 
-        if rsync -a --progress ${to_path} ${from_path} | tee ${log_file_details}; then
-          formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A) 
-          printf "DONE ON [$formated_date]\n\n" >> $log_file
-          echo "DONE" >> ${log_file_details}
-          echo ""
-          echo "[RESTORE SUCCESS FROM] '${to_path}'"
-          echo "[TO] '${from_path}'"
-          echo "[DONE, WAIT...]"
-          echo ""
+        # Restaure os backups incrementais
+        i=1
+        for file in $files; do
+          printf "RESTORE FILE ${i}. '${file}'\n" | tee -a "${log_file}" "${log_file_details}"
+          mkdir -p "${from_path}"
+          tar -xzf "${file}" -C "${from_path}" . --verbose | tee -a "${log_file_details}"
+          ((i++))
+        done
+
+          formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+          printf "\nRESTORE SUCCESS '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+
         else
-          formated_date=$(date +%Y-%m-%d,%H-%M-%S-%A)
-          printf "RESTORE ERROR ON [$formated_date]\n\n" >> $log_file
-          echo "RESTORE ERROR" >> ${log_file_details}
+          printf "\nERROR: DISK UNIT '${arr_disk[i]}' NOT MOUNTED!\n" | tee -a "${log_file}" "${log_file_details}"
           echo ""
-          echo "[RESTORE ERROR FROM] '${to_path}'"
-          echo "[TO] '${from_path}'"
-          echo ""
-          ${sound_error} 
         fi
-      else
-        echo "[ERROR] DISK UNIT '${arr_disk[i]}' NOT MOUNTED!"
-        echo ""
-      fi
-      echo "$(separator)"
+
+        echo "$(separator)"
     done
   fi
 done
 
-echo ""
-echo "[DONE]"
-echo ""
+printf "\nDONE\n\n"
 echo "Press [ENTER] to exit..."
-echo ""
 ${sound_finished}
 read

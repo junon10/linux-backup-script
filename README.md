@@ -37,10 +37,8 @@ Desenvolvido por Junon M.<br>
 <p>Exemplo (backup_path.txt):</p>
 
 ```bash
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
-TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")
-TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup")
 ```
 
 <h3>Incremental Backup</h3>
@@ -52,19 +50,29 @@ TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")
 <p>Exemplo (inc_backup_path.txt):</p>
 
 ```bash
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup1")
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup2")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder")
+TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup")
 DAY_LIMIT=7
 ```
 
 ## Uso
 
 ```bash
-./make_incremental_backup.sh
-./make_backup.sh
-./restore_backup.sh
+# Faz Backup incremental com RSYNC
+./make_rsync_inc_backup.sh
+
+# Faz Backup espelho com RSYNC
+./make_rsync_backup.sh
+
+# Restaura Backup espelho com RSYNC
+./restore_rsync_backup.sh
+
+# Faz Backup incremental com TAR
+./make_tar_inc_backup.sh
+
+# Restaura Backup incremental com TAR
+./restore_tar_inc_backup.sh
+
 ```
 
 ## Vantagens
@@ -92,6 +100,10 @@ DAY_LIMIT=7
 
 ### 2025/01/08 - 1.0.0.11
 - Melhoria na formatação das mensagens<br>
+
+### 2025/01/13 - 1.0.0.12
+- Melhoria nos logs e mensagens<br>
+- Novos scripts de Backup incremental e restauração com o comando TAR<br>
 
 ## Repositório
 [https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
