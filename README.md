@@ -17,7 +17,7 @@ Desenvolvido por Junon M.<br>
 
 2. É recomendado criptografar o Flash-Drive de destino com LUKS, e definir uma senha forte que só você conheça.<br>
 
-3. Escolha quais conjuntos de scripts você vai usar, pois existem 3 tipos diferentes (4, 5, e 6), que não devem ser usados ao mesmo tempo, devido a problemas de aumento de espaço no disco de destino.<br>
+3. Escolha quais conjuntos de scripts você vai usar, pois existem 3 tipos diferentes (itens 4, 5, e 6), que não devem ser usados ao mesmo tempo, devido a problemas de aumento de espaço no disco de destino.<br>
 
 4. Rsync Mirror Backup - copie os scripts (make_rsync_backup.sh), (restore_rsync_backup.sh) e o arquivo de configuração (backup_path.txt) para a unidade de destino.<br> 
 
