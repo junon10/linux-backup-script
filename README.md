@@ -78,7 +78,6 @@ DAY_LIMIT=7
 ## Vantagens
 - Logs detalhados no diretório de destino.<br>
 
-
 ## Limitações
 - Assistente de restauração por script disponível apenas para backup espelhado, para a restauração de backups incrementais é necessário escolher a pasta com a data específica e copiar para seu sistema<br>
 
@@ -86,26 +85,24 @@ DAY_LIMIT=7
 
 - Não podem ser feitos backups de arquivos do sistema Linux para uma partição Windows (NTFS, EXFAT, FAT32, ou FAT) porque causa erros, sempre use sistemas de arquivos Linux por exemplo ext4 ou btrfs. No entanto você ainda pode usar um sistema de arquivos NTFS para copiar os seus documentos com sync backup(espelhado).<br>
 
-- Evite mudar o username da sua conta linux, pois as referências dos backups utilizam links simbólicos com os caminhos completos. Esta limitação será removida futuramente com novas atualizações.<br> 
-
 ## Log de Alterações
 
-### 2025/01/05 - 1.0.0.9
+### v1.0.0.9 2025/01/05
 - Simplificação de parâmetros.<br>
 - Adicionada função para manter apenas os backups mais recentes<br>
 - Reorganização de código<br>
 
-### 2025/01/08 - 1.0.0.10
+### v1.0.0.10 2025/01/08
 - Melhoria na disposição, destaque e limpeza das mensagens no terminal<br>
 
-### 2025/01/08 - 1.0.0.11
+### v1.0.0.11 2025/01/08
 - Melhoria na formatação das mensagens<br>
 
-### 2025/01/13 - 1.0.0.12
+### v1.0.0.12 2025/01/13
 - Melhoria nos logs e mensagens<br>
 - Novos scripts de Backup incremental e restauração com o comando TAR<br>
 
-### 2025/01/13 - 1.0.0.13
+### v1.0.0.13 2025/01/13
 - Correção do script (make_rsync_inc_backup.sh) de links completos para links relativos<br>
 
 ## Repositório
