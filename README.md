@@ -13,21 +13,21 @@ Desenvolvido por Junon M.<br>
  
 ## Instalação
 
-- 1) Clone o repositório.<br>
+- 1. Clone o repositório.<br>
 
-- 2) É recomendado criptografar o Flash-Drive de destino com LUKS, e definir uma senha forte que só você conheça.<br>
+- 2. É recomendado criptografar o Flash-Drive de destino com LUKS, e definir uma senha forte que só você conheça.<br>
 
-- 3) Escolha quais conjuntos de scripts você vai usar, pois existem 3 tipos diferentes (A, B, e C), que não devem ser usados ao mesmo tempo, devido a problemas de aumento de espaço no disco de destino.<br>
+- 3. Escolha quais conjuntos de scripts você vai usar, pois existem 3 tipos diferentes (A, B, e C), que não devem ser usados ao mesmo tempo, devido a problemas de aumento de espaço no disco de destino.<br>
 
-- A) Rsync Mirror Backup - copie os scripts (make_rsync_backup.sh), (restore_rsync_backup.sh) e o arquivo de configuração (backup_path.txt) para a unidade de destino.<br> 
+- A. Rsync Mirror Backup - copie os scripts (make_rsync_backup.sh), (restore_rsync_backup.sh) e o arquivo de configuração (backup_path.txt) para a unidade de destino.<br> 
 
-- B) Rsync Incremental Backup - copie o script (make_rsync_inc_backup.sh) e o arquivo de configuração (inc_backup_path.txt) para a unidade de destino.<br> 
+- B. Rsync Incremental Backup - copie o script (make_rsync_inc_backup.sh) e o arquivo de configuração (inc_backup_path.txt) para a unidade de destino.<br> 
 
-- C) Tar Incremental Backup - copie os scripts (make_tar_backup.sh), (restore_tar_backup.sh) e o arquivo de configuração (inc_backup_path.txt) para a unidade de destino.<br> 
+- C. Tar Incremental Backup - copie os scripts (make_tar_backup.sh), (restore_tar_backup.sh) e o arquivo de configuração (inc_backup_path.txt) para a unidade de destino.<br> 
 
-- 4) Configure as variáveis no arquivo de configuração (backup_path.txt) ou (inc_backup_path.txt) referenciando o destino dos backups. É necessário criar apenas a última subpasta, o restante do caminho será criado automaticamente.<br>
+- 4. Configure as variáveis no arquivo de configuração (backup_path.txt) ou (inc_backup_path.txt) referenciando o destino dos backups. É necessário criar apenas a última subpasta, o restante do caminho será criado automaticamente.<br>
 
-- 5) A primeira cópia de backup será completa (demorada), mas as seguintes serão bem mais rápidas por copiar somente os arquivos modificados desde o último backup.<br>
+- 5. A primeira cópia de backup será completa (demorada), mas as seguintes serão bem mais rápidas por copiar somente os arquivos modificados desde o último backup.<br>
 
 ## Configuração
 
