@@ -115,7 +115,7 @@ last_subfolder="${from_path##*/}"
       # Caminho (Link) para a pasta de backup mais atual
       latest_link="${to_path}/latest"
 
-      printf "\nBACKING UP START '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
       if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee ${log_file_details}; then
         
