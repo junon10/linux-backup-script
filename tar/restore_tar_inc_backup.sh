@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.12"
-app_date="2025/01/13"
+app_version="v1.0.0.14"
+app_date="2025/01/14"
 app_author="Junon M."
 
 separator() {
@@ -115,12 +115,13 @@ last_subfolder="${from_path##*/}"
     opt="w"
   fi
 
-    if [ "$opt" = "w" ] || [ "$opt" = "W" ]; then
+  if [ "$opt" = "w" ] || [ "$opt" = "W" ]; then
 
     # Loop for para as unidades externas
     for i in ${!arr_disk[@]}
     do
-      # Verifica se está montado
+
+      # Verifica se o caminho existe
       if [ -d ${arr_disk[i]} ]; then 
       
         to_path="${arr_disk[i]}/${last_subfolder}/"
@@ -154,18 +155,20 @@ last_subfolder="${from_path##*/}"
           ((i++))
         done
 
-          formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
-          printf "\nRESTORE SUCCESS '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+        formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+        printf "\nRESTORE SUCCESS '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
-        else
-          printf "\nERROR: DISK UNIT '${arr_disk[i]}' NOT MOUNTED!\n" | tee -a "${log_file}" "${log_file_details}"
-          echo ""
-        fi
+        echo "$(separator)" | tee -a "${log_file}" "${log_file_details}"
 
-        echo "$(separator)"
-    done
-  fi
-done
+      else
+        printf "\nERROR: THE PATH '${arr_disk[i]}' DOES NOT EXISTS!\n\n"
+      fi # end - Verifica se o caminho existe
+
+    done # end - Loop for para as unidades externas
+
+  fi # end - if opt
+
+done # end - Loop for para os diretórios de origem
 
 printf "\nDONE\n\n"
 echo "Press [ENTER] to exit..."

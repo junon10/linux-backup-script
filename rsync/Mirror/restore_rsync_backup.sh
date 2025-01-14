@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.12"
-app_date="2025/01/13"
+app_version="v1.0.0.14"
+app_date="2025/01/14"
 app_author="Junon M."
 
 separator() {
@@ -119,48 +119,52 @@ last_subfolder="${from_path##*/}"
 
     if [ "$opt" = "w" ] || [ "$opt" = "W" ]; then
 
-    # Loop for para as unidades externas
-    for i in ${!arr_disk[@]}
-    do
-      # Verifica se está montado
-      if [ -d ${arr_disk[i]} ]; then 
+      # Loop for para as unidades externas
+      for i in ${!arr_disk[@]}
+      do
       
-        to_path="${arr_disk[i]}/${last_subfolder}/"
+        # Verifica se o diretório existe
+        if [ -d ${arr_disk[i]} ]; then 
+
+          to_path="${arr_disk[i]}/${last_subfolder}/"
       
-        # Diretório onde será salvo o arquivo de log
-        log_path=~/"Backup-logs"
-        mkdir -p "${log_path}"
+          # Diretório onde será salvo o arquivo de log
+          log_path=~/"Backup-logs"
+          mkdir -p "${log_path}"
 
-        # Nome do arquivo de log
-        log_file="${log_path}/daily-backup.log"
+          # Nome do arquivo de log
+          log_file="${log_path}/daily-backup.log"
 
-        # Nome do arquivo de log detalhado
-        log_path_details="${log_path}/${last_subfolder}"
-        mkdir -p "${log_path_details}"
+          # Nome do arquivo de log detalhado
+          log_path_details="${log_path}/${last_subfolder}"
+          mkdir -p "${log_path_details}"
 
-        log_file_details="${log_path_details}/${formated_date}-details.log"
+          log_file_details="${log_path_details}/${formated_date}-details.log"
 
-        printf "\nLOG FILES WILL BE WRITTEN TO '${log_path}'\n"
+          printf "\nLOG FILES WILL BE WRITTEN TO '${log_path}'\n"
 
-        printf "\nRESTORE STARTED '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+          printf "\nRESTORE STARTED '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
-        mkdir -p "${from_path}"
+          mkdir -p "${from_path}"
 
-        if rsync -a --progress ${to_path} ${from_path} | tee ${log_file_details}; then
-          formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
-          printf "\nRESTORE SUCCESS '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
-        else
-          formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
-          printf "\nRESTORE ERROR '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
-          ${sound_error} 
-        fi
-      else
-        printf "\nERROR: DISK UNIT '${arr_disk[i]}' NOT MOUNTED!\n\n" | tee -a "${log_file}" "${log_file_details}"
-      fi
-      echo "$(separator)"
-    done
-  fi
-done
+          if rsync -a --progress ${to_path} ${from_path} | tee -a ${log_file_details}; then
+            formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+            printf "\nRESTORE SUCCESS '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+          else
+            formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+            printf "\nRESTORE ERROR '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+            ${sound_error} 
+          fi # end - rsync
+
+          echo "$(separator)" | tee -a "${log_file}" "${log_file_details}"
+
+        fi # end - Verifica se o diretório existe
+
+      done # end - Loop for para as unidades externas
+
+    fi # end - if opt
+
+done # end - Loop for para os diretórios de origem
 
 printf "\nDONE\n\n"
 echo "Press [ENTER] to exit..."

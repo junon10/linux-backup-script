@@ -1,0 +1,7 @@
+
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
+FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
+
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup1")
+TO_PATH+=("/home/$USER/Backup_Test/To/Mirror_Backup2")
+

@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.13"
-app_date="2025/01/13"
+app_version="v1.0.0.14"
+app_date="2025/01/14"
 app_author="Junon M."
 
 separator() {
@@ -90,7 +90,14 @@ last_subfolder="${from_path##*/}"
   # Loop for para as unidades externas
   for i in ${!TO_PATH[@]}
   do
-    # Verifica se está montado
+    
+    # Verifica se o destino existe e tenta criar as pastas
+    if [ ! -d ${TO_PATH[i]} ]; then 
+      printf "\nERROR: THE PATH '${TO_PATH[i]%/}'\nDOES NOT EXIST!\nTRY TO CREATE...\n"
+      mkdir -p "${TO_PATH[i]%/}" 
+    fi
+
+    # Verifica se foi possível criar
     if [ -d ${TO_PATH[i]} ]; then 
       
       # Copia o caminho de destino, removendo a barra do final,
@@ -150,21 +157,22 @@ last_subfolder="${from_path##*/}"
         echo "KEEPING BACKUPS WITH LESS THAN ${DAY_LIMIT} DAY(S) OLD..."
         find "${to_path}" -maxdepth 1 -type d -mtime +"${DAY_LIMIT}" -exec rm -rf {} \;
         echo ""
-        echo "$(separator)"
-
-      else
-
+      else # else rsync
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
         printf "\nBACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
-
-        echo "$(separator)"
         echo ""
         echo "Press [ENTER] to exit..."
         read
         ${sound_error}
         exit 1
-      fi
-    fi
+      fi # end rsync
+
+      echo "$(separator)" | tee -a "${log_file}" "${log_file_details}"
+
+    else # else - Impossível criar caminho
+      printf "\nERROR: THE PATH '${TO_PATH[i]}' DOES NOT EXISTS!\n\nIMPOSSIBLE TO CREATE!\n\n"
+    fi # end - Verifica se foi possível criar
+
   done
 done
 

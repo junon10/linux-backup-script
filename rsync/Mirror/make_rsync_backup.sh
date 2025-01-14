@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.12"
-app_date="2025/01/13"
+app_version="v1.0.0.14"
+app_date="2025/01/14"
 app_author="Junon M."
 
 separator() {
@@ -76,12 +76,18 @@ last_subfolder="${from_path##*/}"
   # Loop for para as unidades externas
   for i in ${!TO_PATH[@]}
   do
-    # Verifica se está montado
+
+    # Verifica se o destino existe e tenta criar as pastas
+    if [ ! -d ${TO_PATH[i]} ]; then 
+      printf "\nERROR: THE PATH '${TO_PATH[i]%/}'\nDOES NOT EXIST!\nTRY TO CREATE...\n"
+      mkdir -p "${TO_PATH[i]%/}" 
+    fi
+
+    # Verifica se foi possível criar
     if [ -d ${TO_PATH[i]} ]; then 
 
       # Copia o caminho de destino, removendo a barra do final
       to_path="${TO_PATH[i]%/}"
-
       mkdir -p ${to_path}      
     
       # Diretório onde será salvo o arquivo de log
@@ -99,7 +105,7 @@ last_subfolder="${from_path##*/}"
 
       printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
 
-      if rsync -a --progress --delete "${from_path}" "${to_path}" | tee "${log_file_details}"; then
+      if rsync -a --progress --delete "${from_path}" "${to_path}" | tee -a "${log_file_details}"; then
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)      
         printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
       else
@@ -107,10 +113,13 @@ last_subfolder="${from_path##*/}"
         printf "\nBACKUP COPY ERROR '${formated_date}'\n FROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
         ${sound_error} 
       fi
-    else
-      printf "\nERROR! THE PATH '${TO_PATH[i]}' DOES NOT EXIST!\n\n" | tee -a "${log_file}" "${log_file_details}"
-    fi
-    echo "$(separator)"
+      
+      echo "$(separator)" | tee -a "${log_file}" "${log_file_details}"     
+
+    else # Impossível criar o caminho
+      printf "\nERROR: THE PATH '${TO_PATH[i]%/}' DOES NOT EXISTS!\n\nIMPOSSIBLE TO CREATE!\n\n"  
+    fi # end - Verifica se foi possível criar
+
   done
 done
 

@@ -15,7 +15,7 @@ Desenvolvido por Junon M.<br>
 
 1. Clone o repositório.<br>
 
-2. É recomendado criptografar o Flash-Drive de destino com LUKS, e definir uma senha forte que só você conheça.<br>
+2. É recomendado criptografar o Flash-Drive de destino com LUKS, e definir uma senha secreta e anote no seu gerenciador de senhas ou num papel.<br>
 
 3. Escolha quais conjuntos de scripts você vai usar, pois existem 3 tipos diferentes (itens 4, 5, e 6), que não devem ser usados ao mesmo tempo, devido a problemas de aumento de espaço no disco de destino.<br>
 
@@ -25,7 +25,7 @@ Desenvolvido por Junon M.<br>
 
 6. Tar Incremental Backup - copie os scripts (make_tar_backup.sh), (restore_tar_backup.sh) e o arquivo de configuração (inc_backup_path.txt) para a unidade de destino.<br> 
 
-7. Configure as variáveis no arquivo de configuração (backup_path.txt) ou (inc_backup_path.txt) referenciando o destino dos backups. É necessário criar apenas a última subpasta, o restante do caminho será criado automaticamente.<br>
+7. Configure as variáveis no arquivo de configuração (backup_path.txt) ou (inc_backup_path.txt) defina o caminho de destino dos backups, que será criado automaticamente.<br>
 
 8. A primeira cópia de backup será completa (demorada), mas as seguintes serão bem mais rápidas por copiar somente os arquivos modificados desde o último backup.<br>
 
@@ -108,6 +108,9 @@ DAY_LIMIT=7
 
 ### v1.0.0.13 2025/01/13
 - Correção do script (make_rsync_inc_backup.sh) de links completos para links relativos<br>
+
+### v1.0.0.14 2025/01/14
+- Criação automática de pastas
 
 ## Repositório
 [https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
