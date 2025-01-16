@@ -110,7 +110,10 @@ DAY_LIMIT=7
 - Correção do script (make_rsync_inc_backup.sh) de links completos para links relativos<br>
 
 ### v1.0.0.14 2025/01/14
-- Criação automática de pastas
+- Criação automática de pastas<br>
+
+### v1.0.0.15 2025/01/16
+- Remoção do excesso de msgs para log padrão<br>
 
 ## Repositório
 [https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)

@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.14"
-app_date="2025/01/14"
+app_version="v1.0.0.15"
+app_date="2025/01/16"
 app_author="Junon M."
 
 separator() {

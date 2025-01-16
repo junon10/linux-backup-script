@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.14"
-app_date="2025/01/14"
+app_version="v1.0.0.15"
+app_date="2025/01/16"
 app_author="Junon M."
 
 separator() {
@@ -44,7 +44,7 @@ echo ""
 if [ -v DAY_LIMIT ]; then
   # Verifica se a data limite de backup é válida
   if [ $DAY_LIMIT -gt 0 ] && [ $DAY_LIMIT -lt 90 ]; then
-    echo "DAY_LIMIT ${DAY_LIMIT} day(s)"
+    echo "${DAY_LIMIT}-DAY CHANGELOG LIMIT"
   else
     echo "ERROR: INVALID DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
     DAY_LIMIT=7
@@ -121,7 +121,8 @@ last_subfolder="${from_path##*/}"
       # Caminho (Link) para a pasta de backup mais atual
       latest_link="${to_path}/latest"
 
-      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+      printf "BACKUP STARTED '${formated_date}'\n" >> "${log_file}"
+      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
 
       if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee -a ${log_file_details}; then
         
@@ -147,19 +148,21 @@ last_subfolder="${from_path##*/}"
         cd "${initial_path}"
 
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
-        printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+        printf "BACKUP SUCCESS '${formated_date}'\n\n" >> "${log_file}"
+        printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
        
         # -mmin=minutos (DEBUG)
-        #echo "Deleting backups older than ${DAY_LIMIT} minute(s)..."
+        #echo "${DAY_LIMIT}-minute changelog limit"
         #find "${to_path}" -maxdepth 1 -type d -mmin +"${DAY_LIMIT}" -exec rm -rf {} \;
 
         # -mtime=dias
-        echo "KEEPING BACKUPS WITH LESS THAN ${DAY_LIMIT} DAY(S) OLD..."
+        echo "${DAY_LIMIT}-day changelog limit"
         find "${to_path}" -maxdepth 1 -type d -mtime +"${DAY_LIMIT}" -exec rm -rf {} \;
         echo ""
       else # else rsync
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
-        printf "\nBACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_full_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+        printf "BACKUP COPY ERROR '${formated_date}'\n\n" >> "${log_file}"
+        printf "\nBACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
         echo ""
         echo "Press [ENTER] to exit..."
         read
@@ -167,7 +170,7 @@ last_subfolder="${from_path##*/}"
         exit 1
       fi # end rsync
 
-      echo "$(separator)" | tee -a "${log_file}" "${log_file_details}"
+      echo "$(separator)" | tee -a "${log_file_details}"
 
     else # else - Impossível criar caminho
       printf "\nERROR: THE PATH '${TO_PATH[i]}' DOES NOT EXISTS!\n\nIMPOSSIBLE TO CREATE!\n\n"

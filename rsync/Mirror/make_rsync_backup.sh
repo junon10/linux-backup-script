@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.14"
-app_date="2025/01/14"
+app_version="v1.0.0.15"
+app_date="2025/01/16"
 app_author="Junon M."
 
 separator() {
@@ -103,18 +103,21 @@ last_subfolder="${from_path##*/}"
 
       log_file_details="${log_path_details}/${formated_date}-details.log"   
 
-      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+      printf "BACKUP STARTED '${formated_date}'\n" >> "${log_file}"
+      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
 
       if rsync -a --progress --delete "${from_path}" "${to_path}" | tee -a "${log_file_details}"; then
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)      
-        printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+        printf "BACKUP SUCCESS '${formated_date}'\n\n" >> "${log_file}"
+        printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
       else
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
-        printf "\nBACKUP COPY ERROR '${formated_date}'\n FROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"
+        printf "BACKUP COPY ERROR '${formated_date}'\n\n" >> "${log_file}"
+        printf "\nBACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
         ${sound_error} 
       fi
       
-      echo "$(separator)" | tee -a "${log_file}" "${log_file_details}"     
+      echo "$(separator)" | tee -a "${log_file_details}"     
 
     else # Impossível criar o caminho
       printf "\nERROR: THE PATH '${TO_PATH[i]%/}' DOES NOT EXISTS!\n\nIMPOSSIBLE TO CREATE!\n\n"  
