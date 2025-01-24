@@ -115,6 +115,9 @@ DAY_LIMIT=7
 ### v1.0.0.15 2025/01/16
 - Remoção do excesso de msgs para log padrão<br>
 
+### v1.0.0.16 2025/01/24
+- Melhoria de algumas mensagens
+
 ## Repositório
 [https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
 

@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.15"
-app_date="2025/01/16"
+app_version="v1.0.0.16"
+app_date="2025/01/24"
 app_author="Junon M."
 
 separator() {
@@ -44,7 +44,7 @@ echo ""
 if [ -v DAY_LIMIT ]; then
   # Verifica se a data limite de backup é válida
   if [ $DAY_LIMIT -gt 0 ] && [ $DAY_LIMIT -lt 90 ]; then
-    echo "${DAY_LIMIT}-DAY CHANGELOG LIMIT"
+    echo "BACKUP HISTORY: ${DAY_LIMIT} day(s)"
   else
     echo "ERROR: INVALID DAY_LIMIT VARIABLE, ASSUMPTION AS 7 DAYS!"
     DAY_LIMIT=7
@@ -138,11 +138,11 @@ last_subfolder="${from_path##*/}"
         printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
 
         # -mmin=minutos (DEBUG)
-        #echo "${DAY_LIMIT}-minute changelog limit"
+        #echo "LIMITING HISTORY TO ${DAY_LIMIT} minute(s)..."
         #find "${to_path}" -maxdepth 1 -type d -mmin +"${DAY_LIMIT}" -exec rm -rf {} \;
 
         # -mtime=dias
-        #echo "${DAY_LIMIT}-day changelog limit"
+        #echo "LIMITING HISTORY TO ${DAY_LIMIT} day(s)..."
         #find "${to_path}" -maxdepth 1 -type d -mtime +"${DAY_LIMIT}" -exec rm -rf {} \;
       else
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
