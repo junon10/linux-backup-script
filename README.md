@@ -118,6 +118,9 @@ DAY_LIMIT=7
 ### v1.0.0.16 2025/01/24
 - Melhoria de algumas mensagens
 
+### v1.0.0.17 2025/01/27
+- Mudança nos scripts para backup automático agendado no Linux (Crontab)
+
 ## Repositório
 [https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
 

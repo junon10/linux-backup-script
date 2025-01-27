@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.16"
-app_date="2025/01/24"
+app_version="v1.0.0.17"
+app_date="2025/01/27"
 app_author="Junon M."
 
 separator() {
@@ -71,8 +71,9 @@ do
 done
 echo ""
 echo "$(separator)"
-printf "\nPress [ENTER] to continue, or [CTRL+C] to exit...\n"
-read
+printf "\nStarting in 15 second(s), or press [CTRL+C] to exit..."
+sleep 15
+printf "\n\n"
 echo "$(separator)"
 
 # formato do arquivo
@@ -163,7 +164,7 @@ last_subfolder="${from_path##*/}"
   done
 done
 
-echo "DONE"
-printf "\nPress [ENTER] to exit...\n"
 ${sound_finished}
-read
+printf "\nDONE\n\nExiting in 30 second(s), or press [CTRL+C] to exit now..."
+sleep 30
+printf "\n\n"
