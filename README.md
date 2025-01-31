@@ -2,7 +2,6 @@
 
 ## Description
 A Linux backup script with options for mirrored (sync) and incremental backups.  
-Developed by Junon M.
 
 ## Requirements
 - **Operating System**: Linux.  
@@ -83,6 +82,11 @@ DAY_LIMIT=7
 - The tar incremental backup does not remove files that might have been deleted from the source.  
 
 ---
+
+## Author
+
+- **Junon M.**  
+  Contact: [junon10@tutamail.com](mailto:junon10@tutamail.com)
 
 ## Changelog
 
