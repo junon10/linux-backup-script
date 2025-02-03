@@ -31,8 +31,23 @@ The first backup will be full (time-consuming), but subsequent backups will copy
 
 Example (`backup_path.txt`):  
 ```bash
-FROM_PATH="/home/$USER/Backup_Test/From/Folder"
-TO_PATH="/home/$USER/Backup_Test/To/Mirror_Backup"
+
+#-------------------------------------------------------------------------------
+# Mirror Backup
+#-------------------------------------------------------------------------------
+
+FROM_PATH+=("/home/$USER/.config/gqrx")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Links")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Installed/EAGLE-6.3.0")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Develop/Projects/My_GitHub")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/KeePassXC")
+
+# Disk Unit 1
+TO_PATH+=("/media/$USER/FlashDisk1/SyncBackup")
+
+# Disk Unit 2 (Replicated content)
+TO_PATH+=("/media/$USER/FlashDisk2/SyncBackup")
+
 ```
 
 ### Incremental Backup
@@ -42,9 +57,25 @@ TO_PATH="/home/$USER/Backup_Test/To/Mirror_Backup"
 
 Example (`inc_backup_path.txt`):  
 ```bash
-FROM_PATH="/home/$USER/Backup_Test/From/Folder"
-TO_PATH="/home/$USER/Backup_Test/To/Incremental_Backup"
-DAY_LIMIT=7
+
+#-------------------------------------------------------------------------------
+# Incremental Backup
+#-------------------------------------------------------------------------------
+
+FROM_PATH+=("/home/$USER/.config/gqrx")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Links")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Installed/EAGLE-6.3.0")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Develop/Projects/My_GitHub")
+FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/KeePassXC")
+
+# Disk Unit 1
+TO_PATH+=("/media/$USER/FlashDisk1/IncBackup")
+
+# Disk Unit 2 (Replicated content)
+TO_PATH+=("/media/$USER/FlashDisk2/IncBackup")
+
+DAY_LIMIT=30 # Backup History = 30 days
+
 ```
 
 ---
