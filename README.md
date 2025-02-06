@@ -14,9 +14,9 @@ A Linux backup script with options for mirrored (sync) and incremental backups.
 1. Clone the repository.  
 2. It's recommended to encrypt the destination drive with LUKS and set a secret password, noting it down in your password manager or on paper.  
 3. Choose which set of scripts you want to use (items 4, 5, or 6), as using them together may cause storage issues.  
-4. Copy the relevant scripts (`make_rsync_backup.sh`, `restore_rsysnc_backup.sh`, and configuration files) to the destination drive for **mirror backups**.  
-5. For **incremental backups with rsync**, copy `make_rsysnc_inc_backup.sh` and `inc_backup_path.txt` to the destination drive.  
-6. For **incremental backups with tar**, copy `make_tar_inc_backup.sh`, `restore_tar_inc_backup.sh`, and `inc_backup_path.txt` to the destination drive.  
+4. Copy the relevant scripts (`make_rsync_backup.sh`, `restore_rsync_backup.sh`, and configuration file `backup_path.txt`) to the destination drive for **mirror backups**.  
+5. For **incremental backups with rsync**, copy (`make_rsync_inc_backup.sh` and `inc_backup_path.txt`) to the destination drive.  
+6. For **incremental backups with tar**, copy (`make_tar_inc_backup.sh`, `restore_tar_inc_backup.sh`, and `inc_backup_path.txt`) to the destination drive.  
 7. Configure the destination path in the configuration files (`backup_path.txt` or `inc_backup_path.txt`), which will be created automatically.  
 
 The first backup will be full (time-consuming), but subsequent backups will copy only modified files since the last backup, making them much faster.
@@ -84,13 +84,13 @@ DAY_LIMIT=30 # Backup History = 30 days
 
 ```bash
 # Perform incremental backup with rsync  
-./make_rsysnc_inc_backup.sh  
+./make_rsync_inc_backup.sh  
 
 # Perform mirrored backup with rsync  
-./make_rsysnc_backup.sh  
+./make_rsync_backup.sh  
 
 # Restore mirrored backup with rsync  
-./restore_rsysnc_backup.sh  
+./restore_rsync_backup.sh  
 
 # Perform incremental backup with tar  
 ./make_tar_inc_backup.sh  
