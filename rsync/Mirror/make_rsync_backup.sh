@@ -103,8 +103,9 @@ last_subfolder="${from_path##*/}"
 
       log_file_details="${log_path_details}/${formated_date}-details.log"   
 
-      printf "BACKUP STARTED '${formated_date}'\n" >> "${log_file}"
-      printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
+      printf "\n"
+      printf "BACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n" | tee -a "${log_file}" "${log_file_details}"
+      printf "\n" >> "${log_file_details}"
 
       if rsync -a --progress --delete "${from_path}" "${to_path}" | tee -a "${log_file_details}"; then
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)      
