@@ -91,7 +91,7 @@ last_subfolder="${from_path##*/}"
       mkdir -p ${to_path}      
     
       # Diretório onde será salvo o arquivo de log
-      log_path="${TO_PATH[i]}/log"
+      log_path="${TO_PATH[i]}/Backup-log"
       mkdir -p "${log_path}"
 
       # Nome do arquivo de log
@@ -103,19 +103,24 @@ last_subfolder="${from_path##*/}"
 
       log_file_details="${log_path_details}/${formated_date}-details.log"   
 
-      printf "\n"
+      printf "\n" | tee -a "${log_file_details}"
       printf "BACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n" | tee -a "${log_file}" "${log_file_details}"
-      printf "\n" >> "${log_file_details}"
+      printf "\n" | tee -a "${log_file_details}"
 
       if rsync -a --progress --delete "${from_path}" "${to_path}" | tee -a "${log_file_details}"; then
-        formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)      
-        printf "BACKUP SUCCESS '${formated_date}'\n\n" >> "${log_file}"
-        printf "\nBACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
-      else
+
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+        printf "\n" | tee -a "${log_file_details}"      
+        printf "BACKUP SUCCESS '${formated_date}'\n\n" >> "${log_file}"
+        printf "BACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
+      else
+
+        formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
+        printf "\n" | tee -a "${log_file_details}"
         printf "BACKUP COPY ERROR '${formated_date}'\n\n" >> "${log_file}"
-        printf "\nBACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
+        printf "BACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
         ${sound_error} 
+
       fi
       
       echo "$(separator)" | tee -a "${log_file_details}"     

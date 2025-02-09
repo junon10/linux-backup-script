@@ -129,7 +129,7 @@ last_subfolder="${from_path##*/}"
           to_path="${arr_disk[i]}/${last_subfolder}/"
       
           # Diretório onde será salvo o arquivo de log
-          log_path=~/"Backup-logs"
+          log_path=~/"Backup-log"
           mkdir -p "${log_path}"
 
           # Nome do arquivo de log

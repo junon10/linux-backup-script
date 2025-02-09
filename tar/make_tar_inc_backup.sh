@@ -111,7 +111,7 @@ last_subfolder="${from_path##*/}"
       to_full_path="${to_path}/${formated_date}"
   
       # Diretório onde será salvo o arquivo de log.
-      log_path="${to_path}/log"
+      log_path="${to_path}/Backup-log"
       mkdir -p "${log_path}" # Faz a árvore de subdiretórios.
 
       # Caminho completo e nome do arquivo de log
