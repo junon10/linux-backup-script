@@ -9,6 +9,15 @@ A Linux backup script with options for mirrored (sync) and incremental backups.
 
 ---
 
+## Features
+- Detailed logs in the destination directory.  
+- Easy replication of backups to multiple disk drives.
+- Crontab scheduling capability.
+- Fast incremental backups.
+- configuration file separate from the main script.
+
+---
+
 ## Installation
 
 1. Clone the repository.  
@@ -98,11 +107,6 @@ DAY_LIMIT=30 # Backup History = 30 days
 # Restore incremental backup with tar  
 ./restore_tar_inc_backup.sh
 ```
-
----
-
-## Advantages
-- Detailed logs in the destination directory.  
 
 ---
 
