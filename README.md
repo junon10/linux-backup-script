@@ -139,8 +139,16 @@ DAY_LIMIT=30 # Backup History = 30 days
 
 ---
 
+## License
+
+- GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+
+---
+
 ## Repository
+
 [https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
 
 ## Contributions
+
 Contributions are welcome! Feel free to fork the repository and submit pull requests with your improvements.  
