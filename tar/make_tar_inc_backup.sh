@@ -71,8 +71,8 @@ do
 done
 echo ""
 echo "$(separator)"
-printf "\nStarting in 15 second(s), or press [CTRL+C] to exit..."
-sleep 15
+printf "\nStarting in 7 second(s), or press [CTRL+C] to exit..."
+sleep 7
 printf "\n\n"
 echo "$(separator)"
 
@@ -165,6 +165,6 @@ last_subfolder="${from_path##*/}"
 done
 
 ${sound_finished}
-printf "\nDONE\n\nExiting in 30 second(s), or press [CTRL+C] to exit now..."
-sleep 30
+printf "\nDONE\n\nExiting in 15 second(s), or press [CTRL+C] to exit now..."
+sleep 15
 printf "\n\n"
