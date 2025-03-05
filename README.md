@@ -141,7 +141,7 @@ DAY_LIMIT=30 # Backup History = 30 days
 
 ## License
 
-- GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+- GPLv3
 
 ---
 
