@@ -21,12 +21,18 @@ A Linux backup script with options for mirrored (sync) and incremental backups.
 ## Installation
 
 1. Clone the repository.  
+
 2. It's recommended to encrypt the destination drive with LUKS and set a secret password, noting it down in your password manager or on paper.  
-3. Choose which set of scripts you want to use (items 4, 5, or 6), as using them together may cause storage issues.  
-4. Copy the relevant scripts (`make_rsync_backup.sh`, `restore_rsync_backup.sh`, and configuration file `backup_path.txt`) to the destination drive for **mirror backups**.  
-5. For **incremental backups with rsync**, copy (`make_rsync_inc_backup.sh` and `inc_backup_path.txt`) to the destination drive.  
-6. For **incremental backups with tar**, copy (`make_tar_inc_backup.sh`, `restore_tar_inc_backup.sh`, and `inc_backup_path.txt`) to the destination drive.  
-7. Configure the destination path in the configuration files (`backup_path.txt` or `inc_backup_path.txt`), which will be created automatically.  
+
+3. Choose which set of scripts you want to use (items 4, 5, or 6), as using them together may cause increased disk space usage.  
+
+4. For **mirror backups**, copy (`make_rsync_backup.sh`, `restore_rsync_backup.sh`, `backup_path.txt`, and `Sounds` folder), to the destination drive.  
+
+5. For **incremental backups with rsync**, copy (`make_rsync_inc_backup.sh`, `inc_backup_path.txt`, and `Sounds` folder) to the destination drive.  
+
+6. For **incremental backups with tar**, copy (`make_tar_inc_backup.sh`, `restore_tar_inc_backup.sh`, `inc_backup_path.txt`, and `Sounds` folder) to the destination drive.  
+
+7. Configure the source and destination directories for backups in the configuration files (`backup_path.txt` or `inc_backup_path.txt`), which will be created automatically.  
 
 The first backup will be full (time-consuming), but subsequent backups will copy only modified files since the last backup, making them much faster.
 
@@ -136,6 +142,7 @@ DAY_LIMIT=30 # Backup History = 30 days
 | 1.0.0.15 | 2025/01/16 | Removed excessive log messages for standard logs. |
 | 1.0.0.16 | 2025/01/24 | Improved some messages. |
 | 1.0.0.17 | 2025/01/27 | Changed scripts to enable automatic backups scheduled on Linux (Crontab). |
+| 1.0.0.18 | 2025/03/19 | Improved terminal messages |
 
 ---
 

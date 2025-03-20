@@ -12,8 +12,8 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.17"
-app_date="2025/01/27"
+app_version="v1.0.0.18"
+app_date="2025/03/19"
 app_author="Junon M."
 
 separator() {
@@ -132,8 +132,9 @@ last_subfolder="${from_path##*/}"
   done
 done
 
+printf "\nDONE\n"
 ${sound_finished}
-printf "\nDONE\n\nExiting in 15 second(s), or press [CTRL+C] to exit now..."
+printf "\nExiting in 15 second(s), or press [CTRL+C] to exit now..."
 sleep 15
 printf "\n\n"
 
