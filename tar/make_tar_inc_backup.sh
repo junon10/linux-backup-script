@@ -164,8 +164,8 @@ last_subfolder="${from_path##*/}"
   done
 done
 
-printf "\nDONE\n"
+printf "\nDONE\n\n"
 ${sound_finished}
-printf "\nExiting in 15 second(s), or press [CTRL+C] to exit now..."
-sleep 15
 printf "\n\n"
+
+
