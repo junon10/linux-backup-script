@@ -12,18 +12,21 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.18"
-app_date="2025/03/19"
+app_version="v1.0.0.19"
+app_date="2025/03/27"
 app_author="Junon M."
 
-separator() {
-echo "--------------------------------------------------------------------------------"
+
+print_separator() {
+  local len=${1:-80}
+  printf "%*s\n" $len "" | tr ' ' '-'
 }
 
-app_title() {
-echo "$(separator)"
+
+print_app_title() {
+print_separator
 echo " LINUX RSYNC INCREMENTAL BACKUP COPY ${app_version} - ${app_date} - by ${app_author}"
-echo "$(separator)"
+print_separator
 }
 
 # Beep com alto-falante da placa mãe
@@ -37,7 +40,7 @@ sound_error="paplay ./Sounds/error.ogg"
 # ${sound_finished}
 
 clear
-echo "$(app_title)"
+print_app_title
 echo ""
 
 
@@ -69,11 +72,11 @@ do
   echo "${TO_PATH[i]%/}"
 done
 echo ""
-echo "$(separator)"
+print_separator
 printf "\nStarting in 7 second(s), or press [CTRL+C] to exit..."
 sleep 7
 printf "\n\n"
-echo "$(separator)"
+print_separator
 
 formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
 
@@ -170,7 +173,7 @@ last_subfolder="${from_path##*/}"
         exit 1
       fi # end rsync
 
-      echo "$(separator)" | tee -a "${log_file_details}"
+      print_separator | tee -a "${log_file_details}"
 
     else # else - Impossível criar caminho
       printf "\nERROR: THE PATH '${TO_PATH[i]}' DOES NOT EXISTS!\n\nIMPOSSIBLE TO CREATE!\n\n"

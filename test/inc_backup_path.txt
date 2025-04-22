@@ -1,8 +1,0 @@
-
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder1")
-FROM_PATH+=("/home/$USER/Backup_Test/From/Folder2")
-
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup1")
-TO_PATH+=("/home/$USER/Backup_Test/To/Incremental_Backup2")
-
-DAY_LIMIT=7 # Keep only the most recent backups (7 days)

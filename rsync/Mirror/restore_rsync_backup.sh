@@ -12,18 +12,20 @@ fi
 
 source ${CONFIG_FILE}
 
-app_version="v1.0.0.18"
-app_date="2025/03/19"
+app_version="v1.0.0.19"
+app_date="2025/03/27"
 app_author="Junon M."
 
-separator() {
-echo "--------------------------------------------------------------------------------"
+
+print_separator() {
+  local len=${1:-80}
+  printf "%*s\n" $len "" | tr ' ' '-'
 }
 
-app_title() {
-echo "$(separator)"
+print_app_title() {
+print_separator
 echo " LINUX RSYNC BACKUP RESTORE ${app_version} - ${app_date} - by ${app_author}"
-echo "$(separator)"
+print_separator
 }
 
 # Beep com alto-falante da placa mãe
@@ -37,7 +39,7 @@ sound_error="paplay ./Sounds/error.ogg"
 # ${sound_finished}
 
 clear
-echo "$(app_title)"
+print_app_title
 echo ""
 echo "WHERE DO YOU WANT TO RESTORE FROM?"
 echo ""
@@ -74,7 +76,7 @@ if [ ! $index -le $[${#TO_PATH[@]}-1] ]; then
 fi
 
 clear
-echo "$(app_title)"
+print_app_title
 
 # Copia removendo qualquer barra do final
 arr_disk[0]="${TO_PATH[${index}]%/}"
@@ -92,7 +94,7 @@ done
 echo ""
 echo "Press [ENTER] to restore now, or [CTRL+C] to exit..."
 read
-echo "$(separator)"
+print_separator
 echo ""
 
 # Data e Hora atual
@@ -156,7 +158,7 @@ last_subfolder="${from_path##*/}"
             ${sound_error} 
           fi # end - rsync
 
-          echo "$(separator)" | tee -a "${log_file}" "${log_file_details}"
+          print_separator | tee -a "${log_file}" "${log_file_details}"
 
         fi # end - Verifica se o diretório existe
 

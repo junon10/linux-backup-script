@@ -143,6 +143,7 @@ DAY_LIMIT=30 # Backup History = 30 days
 | 1.0.0.16 | 2025/01/24 | Improved some messages. |
 | 1.0.0.17 | 2025/01/27 | Changed scripts to enable automatic backups scheduled on Linux (Crontab). |
 | 1.0.0.18 | 2025/03/19 | Improved terminal messages |
+| 1.0.0.19 | 2025/04/22 | Improved terminal messages |
 
 ---
 
