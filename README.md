@@ -43,7 +43,7 @@ A Linux backup script with options for mirrored and incremental backups and remo
 
 ### Make Backup
 - **BACKUP_TYPE**: Backup type selection 
-- **DAY_LIMIT**: Number of days to keep backups (valid for rsync)  
+- **DAY_LIMIT**: backup history changes (valid for rsync)  
 - **FROM_PATH**: Source directory path for backup  
 - **TO_PATH**: Destination directory path  
 
