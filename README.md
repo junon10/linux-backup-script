@@ -119,6 +119,7 @@ restore
 | 1.0.0.19 | 2025/04/22 | Improved terminal messages |
 | 1.0.0.21 | 2025/04/29 | ssh support for rsync mirror backups |
 | 1.0.0.22 | 2025/04/29 | add installer app |
+| 1.0.0.23 | 2025/04/29 | add protection rules |
 ---
 
 ## License

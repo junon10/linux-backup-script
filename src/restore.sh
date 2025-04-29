@@ -18,7 +18,7 @@ source ${CONFIG_FILE}
 sound_finished="/home/$USER/Installed/backup-app/media/finished.ogg"
 sound_error="/home/$USER/Installed/backup-app/media/error.ogg"
 
-app_version="v1.0.0.22"
+app_version="v1.0.0.23"
 app_date="2025/04/29"
 app_author="Junon M."
 
@@ -82,12 +82,6 @@ APP_TITLE="LINUX RSYNC MIRROR RESTORE"
 
 clear
 print_app_title "${APP_TITLE}"
-
-if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
-  echo "Remote restore not supported! Press [ENTER] to exit..."
-  read
-  exit 1
-fi  
 
 echo ""
 echo "WHERE DO YOU WANT TO RESTORE FROM?"
@@ -153,11 +147,16 @@ formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
 for j in ${!FROM_PATH[@]}
 do
 
-# Se tiver barra remova
-from_path="${FROM_PATH[j]%/}"
+  if is_remote_host "${FROM_PATH[j]}"; then
+    echo "ERROR: Remote backup not supported! Jumping directory..."
+    continue
+  fi 
 
-# Obtém o nome da última subpasta
-last_subfolder="${from_path##*/}"
+  # Se tiver barra remova
+  from_path="${FROM_PATH[j]%/}"
+
+  # Obtém o nome da última subpasta
+  last_subfolder="${from_path##*/}"
 
   # Se a pasta não existir, escreva
   if [ -d ${from_path} ]; then 
@@ -173,6 +172,11 @@ last_subfolder="${from_path##*/}"
       # Loop for para as unidades externas
       for i in ${!arr_disk[@]}
       do
+      
+        if is_remote_host "${arr_disk[i]}"; then
+          echo "ERROR: Remote backup not supported! Jumping directory..."
+          continue
+        fi 
       
         # Verifica se o diretório existe
         if [ -d ${arr_disk[i]} ]; then 
@@ -238,13 +242,7 @@ echo ""
 
 echo "Restore not supported! Press [ENTER] to exit..."
 read
-exit 1
-
-if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
-  echo "Remote restore not supported! Press [ENTER] to exit..."
-  read
-  exit 1
-fi  
+exit 1  
 
 fi
 
@@ -259,13 +257,6 @@ APP_TITLE="LINUX TAR INCREMENTAL RESTORE"
 clear
 print_app_title "${APP_TITLE}"
 echo ""
-
-if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
-  echo "Remote restore not supported! Press [ENTER] to exit..."
-  read
-  exit 1
-fi  
-
 
 clear
 print_app_title "${APP_TITLE}"
@@ -331,11 +322,16 @@ formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
 for j in ${!FROM_PATH[@]}
 do
 
-# Se tiver barra remova
-from_path="${FROM_PATH[j]%/}"
+  if is_remote_host "${FROM_PATH[j]}"; then
+    echo "ERROR: Remote backup not supported! Jumping directory..."
+    continue
+  fi 
 
-# Obtém o nome da última subpasta
-last_subfolder="${from_path##*/}"
+  # Se tiver barra remova
+  from_path="${FROM_PATH[j]%/}"
+
+  # Obtém o nome da última subpasta
+  last_subfolder="${from_path##*/}"
 
   # Se a pasta não existir, escreva
   if [ -d ${from_path} ]; then 
@@ -351,6 +347,11 @@ last_subfolder="${from_path##*/}"
     # Loop for para as unidades externas
     for i in ${!arr_disk[@]}
     do
+
+      if is_remote_host "${arr_disk[i]}"; then
+        echo "ERROR: Remote backup not supported! Jumping directory..."
+        continue
+      fi 
 
       # Verifica se o caminho existe
       if [ -d ${arr_disk[i]} ]; then 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 app_name="Backup App"
-app_version="v1.0.0.22"
+app_version="v1.0.0.23"
 app_date="2025/04/29"
 app_author="Junon M."
 

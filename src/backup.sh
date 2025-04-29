@@ -18,7 +18,7 @@ source ${CONFIG_FILE}
 sound_finished="/home/$USER/Installed/backup-app/media/finished.ogg"
 sound_error="/home/$USER/Installed/backup-app/media/error.ogg"
 
-app_version="v1.0.0.22"
+app_version="v1.0.0.23"
 app_date="2025/04/29"
 app_author="Junon M."
 
@@ -63,9 +63,11 @@ copy() {
   rsync "${args[@]}" "${from}" "${to}"
 }
 
+
+
 if [ $BACKUP_TYPE == 1 ]; then
 
-APP_TITLE="RSYNC BACKUP COPY"
+APP_TITLE="RSYNC BACKUP"
 
 # Ex: Para tocar o som use:
 # play_sound "${sound_finished}"
@@ -162,17 +164,11 @@ fi
 
 if [ $BACKUP_TYPE == 2 ]; then
 
-APP_TITLE="RSYNC INCREMENTAL BACKUP COPY"
+APP_TITLE="RSYNC INCREMENTAL BACKUP"
 
 clear
 print_app_title "${APP_TITLE}"
-echo ""
-
-if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
-  echo "Remote backup not supported! Press [ENTER] to exit..."
-  read
-  exit 1
-fi   
+echo ""  
 
 if [ -v DAY_LIMIT ]; then
   # Verifica se a data limite de backup é válida
@@ -214,16 +210,26 @@ formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
 for j in ${!FROM_PATH[@]}
 do
 
-# Copia o caminho de origem, removendo a barra do final
-from_path="${FROM_PATH[j]%/}"
+  if is_remote_host "${FROM_PATH[j]}"; then
+    echo "ERROR: Remote backup not supported! Jumping directory..."
+    continue
+  fi 
 
-# Obtém o nome da última subpasta
-last_subfolder="${from_path##*/}"
+  # Copia o caminho de origem, removendo a barra do final
+  from_path="${FROM_PATH[j]%/}"
+
+  # Obtém o nome da última subpasta
+  last_subfolder="${from_path##*/}"
 
   # Loop for para as unidades externas
   for i in ${!TO_PATH[@]}
   do
-    
+
+    if is_remote_host "${TO_PATH[i]}"; then
+      echo "ERROR: Remote backup not supported! Jumping directory..."
+      continue
+    fi 
+
     # Verifica se o destino existe e tenta criar as pastas
     if [ ! -d ${TO_PATH[i]} ]; then 
       printf "\nERROR: THE PATH '${TO_PATH[i]%/}'\nDOES NOT EXIST!\nTRY TO CREATE...\n"
@@ -322,17 +328,11 @@ fi
 
 if [ $BACKUP_TYPE == 3 ]; then
 
-APP_TITLE="TAR INCREMENTAL BACKUP COPY"
+APP_TITLE="TAR INCREMENTAL BACKUP"
 
 clear
 print_app_title "${APP_TITLE}"
 echo ""
-
-if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
-  echo "Remote backup not supported! Press [ENTER] to exit..."
-  read
-  exit 1
-fi   
 
 <<comment
 if [ -v DAY_LIMIT ]; then
@@ -377,15 +377,25 @@ formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
 for j in ${!FROM_PATH[@]}
 do
 
-# Copia o caminho de origem, removendo a barra do final
-from_path="${FROM_PATH[j]%/}"
+  if is_remote_host "${FROM_PATH[j]}"; then
+    echo "ERROR: Remote backup not supported! Jumping directory..."
+    continue
+  fi 
 
-# Obtém o nome da última subpasta
-last_subfolder="${from_path##*/}"
+  # Copia o caminho de origem, removendo a barra do final
+  from_path="${FROM_PATH[j]%/}"
+
+  # Obtém o nome da última subpasta
+  last_subfolder="${from_path##*/}"
 
   # Loop for para as unidades externas
   for i in ${!TO_PATH[@]}
   do
+
+    if is_remote_host "${TO_PATH[i]}"; then
+      echo "ERROR: Remote backup not supported! Jumping directory..."
+      continue
+    fi 
  
     # Verifica se o destino existe e tenta criar as pastas
     if [ ! -d ${TO_PATH[i]} ]; then 
