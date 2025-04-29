@@ -1,7 +1,7 @@
 # Linux Backup Script
 
 ## Description
-A Linux backup script with options for mirrored (sync) and incremental backups.  
+A Linux backup script with options for mirrored and incremental backups and remote bidirectional ssh support.  
 
 ## Requirements
 - **Operating System**: Linux.  
@@ -10,8 +10,9 @@ A Linux backup script with options for mirrored (sync) and incremental backups.
 ---
 
 ## Features
+- Remote ssh backup support.
 - Detailed logs in the destination directory.  
-- Easy replication of backups to multiple disk drives.
+- Easy replication of backups to multiple disk drives or server location.
 - Crontab scheduling capability.
 - Fast incremental backups.
 - configuration file separate from the main script.
@@ -24,58 +25,36 @@ A Linux backup script with options for mirrored (sync) and incremental backups.
 
 2. It's recommended to encrypt the destination drive with LUKS and set a secret password, noting it down in your password manager or on paper.  
 
-3. Choose which set of scripts you want to use (items 4, 5, or 6), as using them together may cause increased disk space usage.  
+3. Set run permission to the 'install.sh', 'remove.sh', and 'ssh_auto_config.sh' scripts
 
-4. For **mirror backups**, copy (`make_rsync_backup.sh`, `restore_rsync_backup.sh`, `backup_path.txt`, and `Sounds` folder), to the destination drive.  
+4. Double-click on 'install.sh' to install app 
 
-5. For **incremental backups with rsync**, copy (`make_rsync_inc_backup.sh`, `inc_backup_path.txt`, and `Sounds` folder) to the destination drive.  
+5. Open 'ssh_auto_config.sh' and set 'SSH_USER_SERVER' to your username@servername
 
-6. For **incremental backups with tar**, copy (`make_tar_inc_backup.sh`, `restore_tar_inc_backup.sh`, `inc_backup_path.txt`, and `Sounds` folder) to the destination drive.  
+6. Double-click on 'ssh_auto_config.sh' for auto config and send ssh public key to the server
 
-7. Configure the source and destination directories for backups in the configuration files (`backup_path.txt` or `inc_backup_path.txt`), which will be created automatically.  
+7. Set the source and destination directories for backups in the configuration files (`backup.conf`), which will be created automatically.  
 
-The first backup will be full (time-consuming), but subsequent backups will copy only modified files since the last backup, making them much faster.
+8. The first backup will be full (time-consuming), but subsequent backups will copy only modified files since the last backup, making them much faster.
 
 ---
 
 ## Configuration
 
-### Mirror Backup
-- **FROM_PATH**: Source directory path for backup  
-- **TO_PATH**: Destination directory path  
-
-Example (`backup_path.txt`):  
-```bash
-
-#-------------------------------------------------------------------------------
-# Mirror Backup
-#-------------------------------------------------------------------------------
-
-FROM_PATH+=("/home/$USER/.config/gqrx")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Links")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Installed/EAGLE-6.3.0")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Develop/Projects/My_GitHub")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/KeePassXC")
-
-# Disk Unit 1
-TO_PATH+=("/media/$USER/FlashDisk1/SyncBackup")
-
-# Disk Unit 2 (Replicated content)
-TO_PATH+=("/media/$USER/FlashDisk2/SyncBackup")
-
-```
-
-### Incremental Backup
-- **FROM_PATH**: Source directory path for backup  
-- **TO_PATH**: Destination directory path  
+### Make Backup
+- **BACKUP_TYPE**: Backup type selection 
 - **DAY_LIMIT**: Number of days to keep backups (valid for rsync)  
+- **FROM_PATH**: Source directory path for backup  
+- **TO_PATH**: Destination directory path  
 
-Example (`inc_backup_path.txt`):  
+Example (`backup.conf`):  
 ```bash
 
-#-------------------------------------------------------------------------------
-# Incremental Backup
-#-------------------------------------------------------------------------------
+BACKUP_TYPE=1 # Rsync Mirror Backup (with ssh support)
+#BACKUP_TYPE=2 # Rsync Incremental Backup
+#BACKUP_TYPE=3 # Tar Incremental Backup
+
+DAY_LIMIT=7 # backup history changes (7 days)
 
 FROM_PATH+=("/home/$USER/.config/gqrx")
 FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Links")
@@ -86,10 +65,8 @@ FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/KeePassXC")
 # Disk Unit 1
 TO_PATH+=("/media/$USER/FlashDisk1/IncBackup")
 
-# Disk Unit 2 (Replicated content)
-TO_PATH+=("/media/$USER/FlashDisk2/IncBackup")
-
-DAY_LIMIT=30 # Backup History = 30 days
+# Disk Unit 2 (Replicated content to remote server)
+TO_PATH+=("user@remote-server:/media/$USER/SSD_2TB/Backups")
 
 ```
 
@@ -98,25 +75,21 @@ DAY_LIMIT=30 # Backup History = 30 days
 ## Usage
 
 ```bash
-# Perform incremental backup with rsync  
-./make_rsync_inc_backup.sh  
 
-# Perform mirrored backup with rsync  
-./make_rsync_backup.sh  
+# For backup directories:
+# Type 'backup' in the terminal window in the same directory where the backup.conf file is located 
+backup 
 
-# Restore mirrored backup with rsync  
-./restore_rsync_backup.sh  
+# For restore directories:
+# Type 'restore' in the terminal window in the same directory where the backup.conf file is located
+restore 
 
-# Perform incremental backup with tar  
-./make_tar_inc_backup.sh  
-
-# Restore incremental backup with tar  
-./restore_tar_inc_backup.sh
 ```
 
 ---
 
 ## Limitations
+- Does not copy files directly, only folders containing the files.
 - No built-in assistant for restoring incremental rsync backups.  
 - Invalid file names may cause backup errors.  
 - Backups cannot be made from Linux system files to a Windows partition (NTFS, EXFAT, FAT32, or FAT). Use Linux file systems like ext4 or btrfs instead. However, NTFS can still be used for common file copies with mirror backups.  
@@ -144,7 +117,8 @@ DAY_LIMIT=30 # Backup History = 30 days
 | 1.0.0.17 | 2025/01/27 | Changed scripts to enable automatic backups scheduled on Linux (Crontab). |
 | 1.0.0.18 | 2025/03/19 | Improved terminal messages |
 | 1.0.0.19 | 2025/04/22 | Improved terminal messages |
-
+| 1.0.0.21 | 2025/04/29 | ssh support for rsync mirror backups |
+| 1.0.0.22 | 2025/04/29 | add installer app |
 ---
 
 ## License

@@ -1,0 +1,30 @@
+BACKUP STARTED '2025-04-29-[11-01-34]-terça'
+FROM '/home/jr/Backup_Test/From/Folder1'
+TO '/home/jr/Backup_Test/To/Incremental_Backup1'
+BACKUP SUCCESS '2025-04-29-[11-01-34]-terça'
+
+BACKUP STARTED '2025-04-29-[11-01-34]-terça'
+FROM '/home/jr/Backup_Test/From/Folder1'
+TO '/home/jr/Backup_Test/To/Incremental_Backup2'
+BACKUP SUCCESS '2025-04-29-[11-01-34]-terça'
+
+BACKUP STARTED '2025-04-29-[11-01-34]-terça'
+FROM '/home/jr/Backup_Test/From/Folder1'
+TO 'jr@jr-opi5b-desktop.local:/media/jr/ebooks/Backups/Incremental_Backup3'
+BACKUP SUCCESS '2025-04-29-[11-01-35]-terça'
+
+BACKUP STARTED '2025-04-29-[11-01-35]-terça'
+FROM '/home/jr/Backup_Test/From/Folder2'
+TO '/home/jr/Backup_Test/To/Incremental_Backup1'
+BACKUP SUCCESS '2025-04-29-[11-01-35]-terça'
+
+BACKUP STARTED '2025-04-29-[11-01-35]-terça'
+FROM '/home/jr/Backup_Test/From/Folder2'
+TO '/home/jr/Backup_Test/To/Incremental_Backup2'
+BACKUP SUCCESS '2025-04-29-[11-01-35]-terça'
+
+BACKUP STARTED '2025-04-29-[11-01-35]-terça'
+FROM '/home/jr/Backup_Test/From/Folder2'
+TO 'jr@jr-opi5b-desktop.local:/media/jr/ebooks/Backups/Incremental_Backup3'
+BACKUP SUCCESS '2025-04-29-[11-01-36]-terça'
+
