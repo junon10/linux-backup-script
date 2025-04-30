@@ -219,6 +219,7 @@ do
 
           mkdir -p "${from_path}"
 
+          set -o pipefail
           if rsync -a --progress ${to_path} ${from_path} | tee -a ${log_file_details}; then
             formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
             printf "\nRESTORE SUCCESS '${formated_date}'\nFROM '${to_path}'\nTO '${from_path}'\n\n" | tee -a "${log_file}" "${log_file_details}"

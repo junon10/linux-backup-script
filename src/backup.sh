@@ -150,18 +150,28 @@ last_subfolder="${from_path##*/}"
     fi 
     echo "rsync args: ${args[@]}"
 
+    if ! is_remote_host "${to_path}"; then
+      if [ ! -d "${to_path}" ]; then
+        mkdir -p "${to_path}"
+      fi
+    fi
+     
+    set -o pipefail
     if rsync "${args[@]}" "${from_path}" "${to_path}" | tee -a "${local_log_file2}"; then
+      # rsync success
       formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
-      printf "\n" | tee -a "${local_log_file2}"      
+      printf "\n" | tee -a "${local_log_file2}"
       printf "BACKUP SUCCESS '${formated_date}'\n\n" >> "${local_log_file1}"
       printf "BACKUP SUCCESS '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${local_log_file2}"
     else
+      # rsync fail
       formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)
       printf "\n" | tee -a "${local_log_file2}"
       printf "BACKUP COPY ERROR '${formated_date}'\n\n" >> "${local_log_file1}"
       printf "BACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${local_log_file2}"
-      play_sound "${sound_error}" 
-    fi
+      play_sound "${sound_error}"
+    fi    
+   
     print_separator | tee -a "${local_log_file2}"     
     copy "${local_log_path1}/" "${remote_log_path}"
   done
@@ -278,6 +288,7 @@ do
       printf "BACKUP STARTED '${formated_date}'\n" >> "${log_file}"
       printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
 
+      set -o pipefail
       if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee -a ${log_file_details}; then
         
         rm -rf "${latest_link}"
@@ -453,7 +464,8 @@ do
       [ ! -f "$snar_file" ] && touch "$snar_file"
 
       backup_file="${to_full_path}.tar.gz"
-        
+      
+      set -o pipefail  
       if tar -czf "${backup_file}" --listed-incremental="${snar_file}" -C "${from_path}" . --verbose | tee -a "${log_file_details}"; then
         formated_date=$(date +%Y-%m-%d-[%H-%M-%S]-%A)      
         printf "BACKUP SUCCESS '${formated_date}'\n\n" >> "${log_file}"

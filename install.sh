@@ -1,5 +1,7 @@
 #!/bin/bash
 
+param=$1
+
 app_name="Backup App"
 install_directory="/home/$USER/Installed/backup-app"
 media_directory="${install_directory}/media"
@@ -75,8 +77,12 @@ add_to_path() {
 
 print_app_title
 echo
-echo "Press [ENTER] to install '${app_name}', or [CTRL+C] to exit..."
-read
+if [ "$param" != "1" ]; then
+  echo "Press [ENTER] to install '${app_name}', or [CTRL+C] to exit..."
+  read
+else  
+  echo "Instant update activated!"  
+fi
 
 if [ ! -d "${install_directory}" ]; then
   echo "Making app installation directory '${install_directory}'"
@@ -84,8 +90,10 @@ if [ ! -d "${install_directory}" ]; then
   echo
 fi
 
-echo "Installing dependencies, please wait..."
-#sudo apt install rsync tar -y
+if [ "$param" != "1" ]; then
+  echo "Installing dependencies, please wait..."
+  sudo apt install rsync tar -y
+fi
 
 echo "Installing audio notification files in '${media_directory}', please wait..."
 rsync -avz ./"media/" "${media_directory}"
@@ -122,8 +130,13 @@ source ~/.bashrc
 echo
 echo "'${app_name}' successfull installed."
 echo
-echo "Press [ENTER] to exit..."
-read
 
+if [ "$param" != "1" ]; then
+  echo "Press [ENTER] to exit..."
+  read
+else
+  echo "Up to date!"
+  sleep 1  
+fi
 
 
