@@ -1,16 +1,22 @@
 #!/bin/bash
 
 app_name="Backup App"
-app_version="v1.0.0.23"
-app_date="2025/04/29"
-app_author="Junon M."
+install_directory="/home/$USER/Installed/backup-app"
+media_directory="${install_directory}/media"
+
+version_file=./"version.info"
+if [ ! -f ${version_file} ]
+then
+  printf "ERROR: THE FILE '${version_file}' NOT FOUND!\n\n"
+  echo "Press [ENTER] to exit..."
+  read
+  exit
+fi
+source ${version_file}
 
 apps+=("backup")
 apps+=("restore")
 
-install_directory="/home/$USER/Installed/backup-app"
-
-media_directory="${install_directory}/media"
 
 print_separator() {
   local len=${1:-80}
@@ -79,7 +85,7 @@ if [ ! -d "${install_directory}" ]; then
 fi
 
 echo "Installing dependencies, please wait..."
-sudo apt install rsync tar -y
+#sudo apt install rsync tar -y
 
 echo "Installing audio notification files in '${media_directory}', please wait..."
 rsync -avz ./"media/" "${media_directory}"
@@ -99,6 +105,10 @@ do
 
   ln -s "${install_directory}/${apps[i]}.sh" "${install_directory}/${apps[i]}"
 done
+
+if [ -f "${version_file}" ]; then
+  cp "${version_file}" "${install_directory}/${version_file}"
+fi
 
 add_to_path ~/.bashrc "source ~/.paths"
 add_to_path ~/.paths "export PATH=\$PATH:${install_directory}"

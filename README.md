@@ -1,7 +1,7 @@
 # Linux Backup Script
 
 ## Description
-A Linux backup script with options for mirrored and incremental backups and remote bidirectional ssh support.  
+A Linux backup script with options for mirrored ssh support, and local incremental backups.  
 
 ## Requirements
 - **Operating System**: Linux.  
@@ -10,7 +10,7 @@ A Linux backup script with options for mirrored and incremental backups and remo
 ---
 
 ## Features
-- Remote ssh backup support.
+- Remote ssh mirrored backup support.
 - Detailed logs in the destination directory.  
 - Easy replication of backups to multiple disk drives or server location.
 - Crontab scheduling capability.
@@ -120,6 +120,7 @@ restore
 | 1.0.0.21 | 2025/04/29 | ssh support for rsync mirror backups |
 | 1.0.0.22 | 2025/04/29 | add installer app |
 | 1.0.0.23 | 2025/04/29 | add protection rules |
+| 1.0.0.24 | 2025/04/30 | update app labels |
 ---
 
 ## License

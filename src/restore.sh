@@ -1,26 +1,39 @@
 #!/bin/bash
 
-CONFIG_FILE=./backup.conf
+install_directory="/home/$USER/Installed/backup-app"
 
-if [ ! -f ${CONFIG_FILE} ]
+config_file=./backup.conf
+if [ ! -f ${config_file} ]
 then
-  printf "ERROR: THE CONFIGURATION FILE '${CONFIG_FILE}' WAS NOT FOUND!\n\n"
+  printf "ERROR: THE CONFIGURATION FILE '${config_file}' NOT FOUND!\n\n"
   echo "Press [ENTER] to exit..."
   read
   exit
 fi
+source ${config_file}
 
-source ${CONFIG_FILE}
+version_file="${install_directory}/version.info"
+if [ ! -f ${version_file} ]
+then
+  printf "ERROR: THE FILE '${version_file}' NOT FOUND!\n\n"
+  echo "Press [ENTER] to exit..."
+  read
+  exit
+fi
+source ${version_file}
 
-# Beep com alto-falante da placa mãe
 # beep="echo -e \"\a\""
+sound_finished="${install_directory}/media/finished.ogg"
+sound_error="${install_directory}/media/error.ogg"
 
-sound_finished="/home/$USER/Installed/backup-app/media/finished.ogg"
-sound_error="/home/$USER/Installed/backup-app/media/error.ogg"
 
-app_version="v1.0.0.23"
-app_date="2025/04/29"
-app_author="Junon M."
+if [ ! -v BACKUP_TYPE ]; then
+  echo "ERROR: BACKUP_TYPE not found in '${config_file}'"
+  echo "Press [ENTER] to exit..."
+  read
+  exit 1
+fi
+
 
 is_remote_host() {
   local path=$1
@@ -76,9 +89,13 @@ copy() {
 }
 
 
+
+
+
+
 if [ $BACKUP_TYPE == 1 ]; then
 
-APP_TITLE="LINUX RSYNC MIRROR RESTORE"
+APP_TITLE="RSYNC MIRROR RESTORE"
 
 clear
 print_app_title "${APP_TITLE}"
@@ -226,15 +243,15 @@ echo "Press [ENTER] to exit..."
 play_sound "${sound_finished}"
 read
 
-fi
 
 
 
 
 
-if [ $BACKUP_TYPE == 2 ]; then
 
-APP_TITLE="LINUX RSYNC INCREMENTAL RESTORE"
+elif [ $BACKUP_TYPE == 2 ]; then
+
+APP_TITLE="RSYNC INCREMENTAL RESTORE"
 
 clear
 print_app_title "${APP_TITLE}"
@@ -244,15 +261,15 @@ echo "Restore not supported! Press [ENTER] to exit..."
 read
 exit 1  
 
-fi
 
 
 
 
 
-if [ $BACKUP_TYPE == 3 ]; then
 
-APP_TITLE="LINUX TAR INCREMENTAL RESTORE"
+elif [ $BACKUP_TYPE == 3 ]; then
+
+APP_TITLE="TAR INCREMENTAL RESTORE"
 
 clear
 print_app_title "${APP_TITLE}"
@@ -407,4 +424,14 @@ echo "Press [ENTER] to exit..."
 play_sound "${sound_finished}"
 read
 
+
+
+
+else
+  echo "ERROR: BACKUP_TYPE = ${BACKUP_TYPE}"
+  echo "Invalid BACKUP_TYPE option in '${config_file}'"
+  echo
+  echo "Press [ENTER] to exit..."
+  read
+  exit 1
 fi

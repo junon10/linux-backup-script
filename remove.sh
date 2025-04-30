@@ -1,14 +1,21 @@
 #!/bin/bash
 
 app_name="Backup App"
-app_version="v1.0.0.23"
-app_date="2025/04/29"
-app_author="Junon M."
+install_directory="/home/$USER/Installed/backup-app"
+media_directory="${install_directory}/media"
+
+version_file=./"version.info"
+if [ ! -f ${version_file} ]
+then
+  printf "ERROR: THE FILE '${version_file}' NOT FOUND!\n\n"
+  echo "Press [ENTER] to exit..."
+  read
+  exit
+fi
+source ${version_file}
 
 apps+=("backup")
 apps+=("restore")
-
-install_directory="/home/$USER/Installed/backup-app"
 
 
 print_separator() {
