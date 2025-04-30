@@ -29,7 +29,7 @@ A Linux backup script with options for mirrored and incremental backups and remo
 
 4. Double-click on 'install.sh' to install app 
 
-5. Open 'ssh_auto_config.sh' and set 'SSH_USER_SERVER' to your username@servername
+5. Open 'ssh_auto_config.sh' and set the variable 'username_hostname' to your username@hostname. Ex: username_hostname="john@nas.local" 
 
 6. Double-click on 'ssh_auto_config.sh' for auto config and send ssh public key to the server
 
@@ -54,7 +54,7 @@ BACKUP_TYPE=1 # Rsync Mirror Backup (with ssh support)
 #BACKUP_TYPE=2 # Rsync Incremental Backup
 #BACKUP_TYPE=3 # Tar Incremental Backup
 
-DAY_LIMIT=7 # backup history changes (7 days)
+DAY_LIMIT=7 # backup history changes (default 7 days)
 
 FROM_PATH+=("/home/$USER/.config/gqrx")
 FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Links")
@@ -66,7 +66,7 @@ FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/KeePassXC")
 TO_PATH+=("/media/$USER/FlashDisk1/IncBackup")
 
 # Disk Unit 2 (Replicated content to remote server)
-TO_PATH+=("user@remote-server:/media/$USER/SSD_2TB/Backups")
+TO_PATH+=("user@hostname:/media/$USER/SSD_2TB/Backups")
 
 ```
 
