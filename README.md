@@ -56,17 +56,18 @@ BACKUP_TYPE=1 # Rsync Mirror Backup (with ssh support)
 
 DAY_LIMIT=7 # backup history changes (default 7 days)
 
-FROM_PATH+=("/home/$USER/.config/gqrx")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Links")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Installed/EAGLE-6.3.0")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/Develop/Projects/My_GitHub")
-FROM_PATH+=("/media/$USER/KINGSTON_1TB/Docs/KeePassXC")
+FROM_PATH=(
+  "/home/$USER/.config/gqrx"
+  "/media/$USER/KINGSTON_1TB/Docs/Links"
+  "/media/$USER/KINGSTON_1TB/Installed/EAGLE-6.3.0"
+  "/media/$USER/KINGSTON_1TB/Docs/Develop/Projects/My_GitHub"
+  "/media/$USER/KINGSTON_1TB/Docs/KeePassXC"
+)
 
-# Disk Unit 1
-TO_PATH+=("/media/$USER/FlashDisk1/IncBackup")
-
-# Disk Unit 2 (Replicated content to remote server)
-TO_PATH+=("user@hostname:/media/$USER/SSD_2TB/Backups")
+TO_PATH=(
+  "/media/$USER/FlashDisk1/IncBackup"
+  "user@hostname:/media/$USER/SSD_2TB/Backups"
+)
 
 ```
 
@@ -121,6 +122,7 @@ restore
 | 1.0.0.22 | 2025/04/29 | add installer app |
 | 1.0.0.23 | 2025/04/29 | add protection rules |
 | 1.0.0.24 | 2025/04/30 | update app labels |
+| 1.0.0.26 | 2025/05/02 | arrays changes |
 ---
 
 ## License
