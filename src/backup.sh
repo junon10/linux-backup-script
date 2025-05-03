@@ -143,10 +143,10 @@ last_subfolder="${from_path##*/}"
     
     if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
       echo "remote host transfer"
-      args=(-a --progress --delete -e ssh)
+      args=(-a --progress --delete --mkpath -e ssh)
     else
       echo "local host transfer"
-      args=(-a --progress --delete)
+      args=(-a --progress --delete --mkpath)
     fi 
     echo "rsync args: ${args[@]}"
 

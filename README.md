@@ -54,7 +54,7 @@ BACKUP_TYPE=1 # Rsync Mirror Backup (with ssh support)
 #BACKUP_TYPE=2 # Rsync Incremental Backup
 #BACKUP_TYPE=3 # Tar Incremental Backup
 
-DAY_LIMIT=7 # backup history changes (default 7 days)
+DAY_LIMIT=7 # Changelog (default 7 days)
 
 FROM_PATH=(
   "/home/$USER/.config/gqrx"
