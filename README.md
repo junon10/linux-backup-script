@@ -50,9 +50,9 @@ A Linux backup script with options for mirrored ssh support, and local increment
 Example (`backup.conf`):  
 ```bash
 
-BACKUP_TYPE=1 # Rsync Mirror Backup (with ssh support)
-#BACKUP_TYPE=2 # Rsync Incremental Backup
-#BACKUP_TYPE=3 # Tar Incremental Backup
+BACKUP_TYPE=1 # Rsync Incremental Mirror Backup (with ssh support)
+#BACKUP_TYPE=2 # Rsync Incremental History Changelog Backup 
+#BACKUP_TYPE=3 # Tar Incremental History Changelog Backup
 
 DAY_LIMIT=7 # Changelog (default 7 days)
 
@@ -91,8 +91,6 @@ restore
 
 ## Limitations
 - Does not copy files directly, only folders containing the files.
-- No built-in assistant for restoring incremental rsync backups.  
-- Invalid file names may cause backup errors.  
 - Backups cannot be made from Linux system files to a Windows partition (NTFS, EXFAT, FAT32, or FAT). Use Linux file systems like ext4 or btrfs instead. However, NTFS can still be used for common file copies with mirror backups.  
 - The tar incremental backup does not remove files that might have been deleted from the source.  
 
@@ -107,7 +105,7 @@ restore
 
 | Version | Date        | Changes Made               |
 |---------|-------------|---------------------------|
-| 1.0.0.9 | 2025/01/05 | Simplification of parameters. Added function to keep only the most recent backups. Code reorganization. |
+| 1.0.0.9 | 2025/01/05 | Parameter simplification. Added function to keep only the most recent backups. Code reorganization. |
 | 1.0.0.10 | 2025/01/08 | Improved terminal messages and formatting. |
 | 1.0.0.11 | 2025/01/08 | Enhanced message formatting. |
 | 1.0.0.12 | 2025/01/13 | Improved logs and messages. New incremental and restore scripts with tar command. |

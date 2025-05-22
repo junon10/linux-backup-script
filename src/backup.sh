@@ -67,11 +67,15 @@ copy() {
   local from=$1
   local to=$2 
   if is_remote_host "${from}" || is_remote_host "${to}"; then
-    args=(-avz -e ssh)
+    args=(-avz --partial -e ssh)
   else
-    args=(-avz)
+    args=(-avz --partial)
   fi 
-  rsync "${args[@]}" "${from}" "${to}"
+  if rsync "${args[@]}" "${from}" "${to}" > /dev/null; then
+    echo "copy success" >&2
+  else
+    echo "copy error" >&2
+  fi
 }
 
 
@@ -143,10 +147,10 @@ last_subfolder="${from_path##*/}"
     
     if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
       echo "remote host transfer"
-      args=(-a --progress --delete --mkpath -e ssh)
+      args=(-a --progress --delete --partial --mkpath -e ssh)
     else
       echo "local host transfer"
-      args=(-a --progress --delete --mkpath)
+      args=(-a --progress --delete --partial --mkpath)
     fi 
     echo "rsync args: ${args[@]}"
 
@@ -171,9 +175,11 @@ last_subfolder="${from_path##*/}"
       printf "BACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${local_log_file2}"
       play_sound "${sound_error}"
     fi    
-   
-    print_separator | tee -a "${local_log_file2}"     
+    echo "copying log files..."     
     copy "${local_log_path1}/" "${remote_log_path}"
+    echo
+    print_separator | tee -a "${local_log_file2}"
+
   done
 done
 
