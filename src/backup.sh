@@ -69,7 +69,7 @@ copy() {
   if is_remote_host "${from}" || is_remote_host "${to}"; then
     args=(-avz --partial -e ssh)
   else
-    args=(-avz --partial)
+    args=(-avz --fsync --partial)
   fi 
   if rsync "${args[@]}" "${from}" "${to}" > /dev/null; then
     echo "copy success" >&2
@@ -132,14 +132,15 @@ last_subfolder="${from_path##*/}"
   do
     # Copia o caminho de destino, removendo a barra do final
     to_path="${TO_PATH[i]%/}"
-     
     local_log_path1=./"Backup-log"
     local_log_path2="${local_log_path1}/${last_subfolder}"
     mkdir -p "${local_log_path2}" 
+
     local_log_file1="${local_log_path1}/daily-backup.log"
     local_log_file2="${local_log_path2}/${formated_date}-details.log"  
-     
-    remote_log_path="${to_path}/Backup-log" 
+
+    remote_log_file1="${to_path}/Backup-log/daily-backup.log"
+    remote_log_file2="${to_path}/Backup-log/${last_subfolder}/${formated_date}-details.log" 
 
     printf "\n" | tee -a "${local_log_file2}"
     printf "BACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n" | tee -a "${local_log_file1}" "${local_log_file2}"
@@ -150,7 +151,7 @@ last_subfolder="${from_path##*/}"
       args=(-a --progress --delete --partial --mkpath -e ssh)
     else
       echo "local host transfer"
-      args=(-a --progress --delete --partial --mkpath)
+      args=(-a --fsync --progress --delete --partial --mkpath)
     fi 
     echo "rsync args: ${args[@]}"
 
@@ -175,8 +176,13 @@ last_subfolder="${from_path##*/}"
       printf "BACKUP COPY ERROR '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${local_log_file2}"
       play_sound "${sound_error}"
     fi    
-    echo "copying log files..."     
-    copy "${local_log_path1}/" "${remote_log_path}"
+
+    echo "copying log file 1..."     
+    copy "${local_log_file1}" "${remote_log_file1}"
+    
+    echo "copying log file 2..."     
+    copy "${local_log_file2}" "${remote_log_file2}"
+    
     echo
     print_separator | tee -a "${local_log_file2}"
 
@@ -295,7 +301,7 @@ do
       printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
 
       set -o pipefail
-      if rsync -a --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee -a ${log_file_details}; then
+      if rsync -a --fsync --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee -a ${log_file_details}; then
         
         rm -rf "${latest_link}"
 

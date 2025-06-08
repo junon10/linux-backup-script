@@ -121,6 +121,7 @@ restore
 | 1.0.0.23 | 2025/04/29 | add protection rules |
 | 1.0.0.24 | 2025/04/30 | update app labels |
 | 1.0.0.26 | 2025/05/02 | arrays changes |
+| 1.0.0.31 | 2025/06/08 | log copy minor improvement |
 ---
 
 ## License
