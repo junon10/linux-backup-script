@@ -67,9 +67,9 @@ copy() {
   local from=$1
   local to=$2 
   if is_remote_host "${from}" || is_remote_host "${to}"; then
-    args=(-avz --partial -e ssh)
+    args=(-avz --partial --mkpath -e ssh)
   else
-    args=(-avz --fsync --partial)
+    args=(-avz --fsync --partial --mkpath)
   fi 
   if rsync "${args[@]}" "${from}" "${to}" > /dev/null; then
     echo "copy success" >&2
