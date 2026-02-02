@@ -148,10 +148,10 @@ last_subfolder="${from_path##*/}"
     
     if is_remote_host "${from_path}" || is_remote_host "${to_path}"; then
       echo "remote host transfer"
-      args=(-a --progress --delete --partial --mkpath -e ssh)
+      args=(-avz --progress --delete --partial --mkpath -e ssh)
     else
       echo "local host transfer"
-      args=(-a --fsync --progress --delete --partial --mkpath)
+      args=(-avz --fsync --progress --delete --partial --mkpath)
     fi 
     echo "rsync args: ${args[@]}"
 
@@ -301,7 +301,7 @@ do
       printf "\nBACKUP STARTED '${formated_date}'\nFROM '${from_path}'\nTO '${to_path}'\n\n" | tee -a "${log_file_details}"
 
       set -o pipefail
-      if rsync -a --fsync --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee -a ${log_file_details}; then
+      if rsync -avz --fsync --progress --out-format='%n' --delete "${from_path}" --link-dest "${latest_link}" --exclude=".cache" "${to_full_path}" | tee -a ${log_file_details}; then
         
         rm -rf "${latest_link}"
 
