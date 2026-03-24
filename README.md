@@ -51,7 +51,7 @@ Example (`backup.conf`):
 ```bash
 
 BACKUP_TYPE=1 # Rsync Incremental Mirror Backup (with ssh support)
-#BACKUP_TYPE=2 # Rsync Incremental History Changelog Backup 
+#BACKUP_TYPE=2 # Rsync Incremental History Changelog Backup (For mechanical hard drives only, due to the high volume of writes!) 
 #BACKUP_TYPE=3 # Tar Incremental History Changelog Backup
 
 DAY_LIMIT=7 # Changelog (default 7 days)
