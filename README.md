@@ -7,8 +7,6 @@ A Linux backup script with options for mirrored ssh support, and local increment
 - **Operating System**: Linux.  
 - **File System**: ext4, btrfs.  
 
----
-
 ## Features
 - Remote ssh mirrored backup support.
 - Detailed logs in the destination directory.  
@@ -16,8 +14,6 @@ A Linux backup script with options for mirrored ssh support, and local increment
 - Crontab scheduling capability.
 - Fast incremental backups.
 - configuration file separate from the main script.
-
----
 
 ## Installation
 
@@ -36,8 +32,6 @@ A Linux backup script with options for mirrored ssh support, and local increment
 7. Set the source and destination directories for backups in the configuration files (`backup.conf`), which will be created automatically.  
 
 8. The first backup will be full (time-consuming), but subsequent backups will copy only modified files since the last backup, making them much faster.
-
----
 
 ## Configuration
 
@@ -70,9 +64,6 @@ TO_PATH=(
 )
 
 ```
-
----
-
 ## Usage
 
 ```bash
@@ -86,15 +77,10 @@ backup
 restore 
 
 ```
-
----
-
 ## Limitations
 - Does not copy files directly, only folders containing the files.
 - Backups cannot be made from Linux system files to a Windows partition (NTFS, EXFAT, FAT32, or FAT). Use Linux file systems like ext4 or btrfs instead. However, NTFS can still be used for common file copies with mirror backups.  
 - The tar incremental backup does not remove files that might have been deleted from the source.  
-
----
 
 ## Author
 
@@ -122,13 +108,10 @@ restore
 | 1.0.0.24 | 2025/04/30 | update app labels |
 | 1.0.0.26 | 2025/05/02 | arrays changes |
 | 1.0.0.31 | 2025/06/08 | log copy minor improvement |
----
 
 ## License
 
 - GPLv3
-
----
 
 ## Repository
 
