@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 install_directory="/home/$USER/Installed/backup-app"
 
 config_file=./backup.conf
@@ -10,6 +11,14 @@ then
   read
   exit
 fi
+
+# Validation: Check if the file contains dangerous commands
+# This checks for things like 'rm ', 'mv ', 'curl', '|', etc.
+if grep -qE "(rm |mv |curl|wget|chmod|chown|>|\|)" "$config_file"; then
+    echo "ERROR: Suspicious commands detected in $config_file!"
+    exit 1
+fi
+
 source ${config_file}
 
 version_file="${install_directory}/version.info"
@@ -20,6 +29,14 @@ then
   read
   exit
 fi
+
+# Validation: Check if the file contains dangerous commands
+# This checks for things like 'rm ', 'mv ', 'curl', '|', etc.
+if grep -qE "(rm |mv |curl|wget|chmod|chown|>|\|)" "$version_file"; then
+    echo "ERROR: Suspicious commands detected in $version_file!"
+    exit 1
+fi
+
 source ${version_file}
 
 # beep="echo -e \"\a\""

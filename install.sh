@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 param=$1
 
 app_name="Backup App"
@@ -14,6 +15,14 @@ then
   read
   exit
 fi
+
+# Validation: Check if the file contains dangerous commands
+# This checks for things like 'rm ', 'mv ', 'curl', '|', etc.
+if grep -qE "(rm |mv |curl|wget|chmod|chown|>|\|)" "$version_file"; then
+    echo "ERROR: Suspicious commands detected in $version_file!"
+    exit 1
+fi
+
 source ${version_file}
 
 apps+=("backup")

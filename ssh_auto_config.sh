@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 public_key_access_only="1"
 
 username_hostname="user@server.local"
