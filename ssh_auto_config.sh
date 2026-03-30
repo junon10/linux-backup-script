@@ -1,4 +1,13 @@
 #!/bin/bash
+#
+# Project: Linux Backup Script
+# File: ssh_auto_config.sh
+# Version: v1.0.0.35
+# Date: 2026/03/30
+# License: GNU GPL v3.0
+# Developed by: Junon M. (2008-2026)
+# Description: Backup Script with detailed logs.
+#
 
 
 public_key_access_only="1"
