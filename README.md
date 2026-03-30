@@ -87,6 +87,18 @@ restore
 - **Junon M.**  
   Contact: [junon10@tutamail.com](mailto:junon10@tutamail.com)
 
+## License
+
+- GPLv3
+
+## Repository
+
+[https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
+
+## Contributions
+
+Contributions are welcome! Feel free to fork the repository and submit pull requests with your improvements.  
+
 ## Changelog
 
 | Version | Date        | Changes Made               |
@@ -108,15 +120,4 @@ restore
 | 1.0.0.24 | 2025/04/30 | update app labels |
 | 1.0.0.26 | 2025/05/02 | arrays changes |
 | 1.0.0.31 | 2025/06/08 | log copy minor improvement |
-
-## License
-
-- GPLv3
-
-## Repository
-
-[https://github.com/junon10/linux-backup-script](https://github.com/junon10/linux-backup-script)
-
-## Contributions
-
-Contributions are welcome! Feel free to fork the repository and submit pull requests with your improvements.  
+| 1.0.0.36 | 2026/03/30 | Auto commit. |
