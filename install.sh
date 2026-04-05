@@ -2,8 +2,8 @@
 #
 # Project: Linux Backup Script
 # File: install.sh
-# Version: 1.0.0.36
-# Date: 2026/03/30
+# Version: 1.0.0.37
+# Date: 2026/04/05
 # License: GNU GPL v3.0
 # Developed by: Junon M. (2008-2026)
 # Description: Backup Script with detailed logs.
@@ -11,7 +11,7 @@
 param=$1
 
 app_name="Backup App"
-install_directory="/home/$USER/Installed/backup-app"
+install_directory="/home/$USER/Installed-Apps/backup-app"
 media_directory="${install_directory}/media"
 
 version_file=./"version.info"

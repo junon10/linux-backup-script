@@ -53,7 +53,7 @@ DAY_LIMIT=7 # Changelog (default 7 days)
 FROM_PATH=(
   "/home/$USER/.config/gqrx"
   "/media/$USER/KINGSTON_1TB/Docs/Links"
-  "/media/$USER/KINGSTON_1TB/Installed/EAGLE-6.3.0"
+  "/media/$USER/KINGSTON_1TB/Installed-Apps/EAGLE-6.3.0"
   "/media/$USER/KINGSTON_1TB/Docs/Develop/Projects/My_GitHub"
   "/media/$USER/KINGSTON_1TB/Docs/KeePassXC"
 )
@@ -121,3 +121,4 @@ Contributions are welcome! Feel free to fork the repository and submit pull requ
 | 1.0.0.26 | 2025/05/02 | arrays changes |
 | 1.0.0.31 | 2025/06/08 | log copy minor improvement |
 | 1.0.0.36 | 2026/03/30 | Auto commit. |
+| 1.0.0.37 | 2026/04/05 | Auto commit. |
